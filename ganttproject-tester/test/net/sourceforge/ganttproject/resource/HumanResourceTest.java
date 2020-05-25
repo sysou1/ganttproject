@@ -20,7 +20,7 @@ public class HumanResourceTest extends TaskTestCase {
         String mail = "test@uantwerpen.be";
         String phone = "888888888";
         String description = "test description";
-        String newName = "resource.copy.prefix";
+        String newName = "Copy_Foo";
 
         HumanResourceManager resourceManager = new HumanResourceManager(null, new CustomColumnsManager());
         HumanResource humanResource = new HumanResource("Foo", 1, resourceManager);
