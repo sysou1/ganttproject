@@ -20,7 +20,6 @@ public class HumanResourceTest extends TaskTestCase {
         String mail = "test@uantwerpen.be";
         String phone = "888888888";
         String description = "test description";
-        String newName = "Copy_Foo";
 
         HumanResourceManager resourceManager = new HumanResourceManager(null, new CustomColumnsManager());
         HumanResource humanResource = new HumanResource("Foo", 1, resourceManager);
@@ -36,7 +35,6 @@ public class HumanResourceTest extends TaskTestCase {
         HumanResource copyOfHumanResource = humanResource.unpluggedClone();
 
         assertEquals(-1, copyOfHumanResource.getId());
-        assertEquals(newName, copyOfHumanResource.getName());
         assertEquals(humanResource.getDescription(), copyOfHumanResource.getDescription());
         assertEquals(description, copyOfHumanResource.getDescription());
         assertEquals(humanResource.getMail(), copyOfHumanResource.getMail());
