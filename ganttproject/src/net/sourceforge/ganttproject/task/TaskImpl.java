@@ -100,8 +100,6 @@ public class TaskImpl implements Task {
 
   private boolean bExpand;
 
-  // private final TaskDependencyCollection myDependencies = new
-  // TaskDependencyCollectionImpl();
   private final ResourceAssignmentCollectionImpl myAssignments;
 
   private final TaskDependencySlice myDependencySlice;
@@ -327,6 +325,7 @@ public class TaskImpl implements Task {
 
         @Override
         public void write() throws IOException {
+          throw new UnsupportedOperationException();
         }
       });
     }
@@ -1030,7 +1029,6 @@ public class TaskImpl implements Task {
       Date newStart;
       if (unitCount > 0) {
         TimeDuration length = myManager.createLength(myLength.getTimeUnit(), unitCount);
-        // clone.setDuration(length);
         newStart = RESTLESS_CALENDAR.shiftDate(myStart.getTime(), length);
         if (0 == (getManager().getCalendar().getDayMask(newStart) & DayMask.WORKING)) {
           newStart = getManager().getCalendar().findClosest(newStart, myLength.getTimeUnit(), MoveDirection.FORWARD, DayType.WORKING);
