@@ -96,7 +96,7 @@ public class TaskImpl implements Task {
 
   private TimeDuration myLength;
 
-  private final List<TaskActivity> myActivities = new ArrayList<TaskActivity>();
+  private final List<TaskActivity> myActivities = new ArrayList<>();
 
   private boolean bExpand;
 
@@ -132,9 +132,9 @@ public class TaskImpl implements Task {
 
   private boolean isUnplugged = false;
 
-  public final static int NONE = 0;
+  public static final int NONE = 0;
 
-  public final static int EARLIESTBEGIN = 1;
+  public static final int EARLIESTBEGIN = 1;
 
   private static final GPCalendarCalc RESTLESS_CALENDAR = new AlwaysWorkingTimeCalendarImpl();
 
@@ -608,7 +608,7 @@ public class TaskImpl implements Task {
 
     private Pair<FieldChange, FieldChange> myShiftChange;
 
-    private final List<Runnable> myCommands = new ArrayList<Runnable>();
+    private final List<Runnable> myCommands = new ArrayList<>();
 
     private int myIsolationLevel;
 
@@ -678,7 +678,7 @@ public class TaskImpl implements Task {
 
     public List<TaskActivity> getActivities() {
       if (myActivities == null && (myStartChange != null) || (myDurationChange != null)) {
-        myActivities = new ArrayList<TaskActivity>();
+        myActivities = new ArrayList<>();
         TaskImpl.recalculateActivities(myManager.getConfig().getCalendar(), TaskImpl.this, myActivities,
             getStart().getTime(), TaskImpl.this.getEnd().getTime());
       }
