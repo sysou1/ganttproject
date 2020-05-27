@@ -326,12 +326,8 @@ class MutatorImpl implements TaskMutator {
 
   @Override
   public void shift(float unitCount) {
-    Task result = getPrecomputedShift(unitCount);
-    if (result == null) {
-      result = task.shift(unitCount);
-      cachePrecomputedShift(result, unitCount);
-    }
-
+    Task result = null;
+    result = task.shift(unitCount);
     setStart(result.getStart());
     setDuration(result.getDuration());
     setEnd(result.getEnd());
@@ -355,15 +351,6 @@ class MutatorImpl implements TaskMutator {
   @Override
   public void setIsolationLevel(int level) {
     myIsolationLevel = level;
-  }
-
-  private void cachePrecomputedShift(Task result, float unitCount) {
-    // TODO Implement cache
-  }
-
-  private Task getPrecomputedShift(float unitCount) {
-    // TODO Use cache to grab value
-    return null;
   }
 
   @Override
