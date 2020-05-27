@@ -49,11 +49,11 @@ public class LoadDistribution {
     public final Date endDate;
   }
 
-  private final List<Load> myDaysOff = new LinkedList<Load>();
+  private final List<Load> myDaysOff = new LinkedList<>();
 
-  private final List<Load> myLoads = new ArrayList<Load>();
+  private final List<Load> myLoads = new ArrayList<>();
 
-  private final List<Load> myTasksLoads = new ArrayList<Load>();
+  private final List<Load> myTasksLoads = new ArrayList<>();
 
   private final HumanResource myResource;
 
@@ -171,14 +171,14 @@ public class LoadDistribution {
   }
 
   public Map<Task, List<Load>> getSeparatedTaskLoads() {
-    HashMap<Task, List<Load>> result = new HashMap<Task, List<Load>>();
+    HashMap<Task, List<Load>> result = new HashMap<>();
     List<Load> taskLoads = getTasksLoads();
     for (int i = 0; i < taskLoads.size(); i++) {
       Load nextLoad = taskLoads.get(i);
       Task nextTask = nextLoad.refTask;
       List<Load> partition = result.get(nextTask);
       if (partition == null) {
-        partition = new ArrayList<Load>();
+        partition = new ArrayList<>();
         result.put(nextTask, partition);
       }
       partition.add(nextLoad);

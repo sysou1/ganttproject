@@ -46,7 +46,7 @@ public class AllocationTagHandler extends AbstractTagHandler implements  Parsing
 
   private RoleManager myRoleManager;
 
-  private final HashMap<ResourceAssignment, String> myLateAssigmnent2roleBinding = new HashMap<ResourceAssignment, String>();
+  private final HashMap<ResourceAssignment, String> myLateAssigmnent2roleBinding = new HashMap<>();
 
   public AllocationTagHandler(HumanResourceManager resourceMgr, TaskManager taskMgr, RoleManager roleMgr) {
     super("allocation");
@@ -107,10 +107,6 @@ public class AllocationTagHandler extends AbstractTagHandler implements  Parsing
     if (task == null) {
       throw new FileFormatException("Task with id=" + taskId + " not found");
     }
-    // TaskMutator mutator = task.createMutator();
-    // ResourceAssignment assignment = mutator.addResource(human);
-    // assignment.setLoad(load);
-    // mutator.commit();
 
     ResourceAssignment assignment = task.getAssignmentCollection().addAssignment(human);
 

@@ -85,9 +85,9 @@ public class HumanResourceManager {
     public abstract HumanResource build();
   }
 
-  private List<ResourceView> myViews = new ArrayList<ResourceView>();
+  private List<ResourceView> myViews = new ArrayList<>();
 
-  private List<HumanResource> resources = new ArrayList<HumanResource>();
+  private List<HumanResource> resources = new ArrayList<>();
 
   private int nextFreeId = 0;
 
@@ -261,7 +261,7 @@ public class HumanResourceManager {
   }
 
   public Map<HumanResource, HumanResource> importData(HumanResourceManager hrManager, HumanResourceMerger merger) {
-    Map<HumanResource, HumanResource> foreign2native = new HashMap<HumanResource, HumanResource>();
+    Map<HumanResource, HumanResource> foreign2native = new HashMap<>();
     List<HumanResource> foreignResources = hrManager.getResources();
     List<HumanResource> createdResources = Lists.newArrayList();
     for (int i = 0; i < foreignResources.size(); i++) {

@@ -204,7 +204,6 @@ public class HumanResource implements CustomPropertyHolder {
       myCustomProperties.setValue(def, value);
       fireResourceChanged();
     } catch (CustomColumnsException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
   }
