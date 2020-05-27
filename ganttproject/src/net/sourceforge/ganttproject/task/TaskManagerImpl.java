@@ -140,7 +140,7 @@ public class TaskManagerImpl implements TaskManager {
   private boolean areEventsEnabled = true;
 
   private static class TaskMap {
-    private final Map<Integer, Task> myId2task = new HashMap<Integer, Task>();
+    private final Map<Integer, Task> myId2task = new HashMap<>();
     private TaskDocumentOrderComparator myComparator;
     private boolean isModified = true;
     private Task[] myArray;
@@ -152,12 +152,12 @@ public class TaskManagerImpl implements TaskManager {
     }
 
     void addTask(Task task) {
-      myId2task.put(new Integer(task.getTaskID()), task);
+      myId2task.put(task.getTaskID(), task);
       isModified = true;
     }
 
     Task getTask(int id) {
-      return myId2task.get(new Integer(id));
+      return myId2task.get(id);
     }
 
     public Task[] getTasks() {
@@ -175,7 +175,7 @@ public class TaskManagerImpl implements TaskManager {
     }
 
     public void removeTask(Task task) {
-      myId2task.remove(new Integer(task.getTaskID()));
+      myId2task.remove(task.getTaskID());
       Task[] nestedTasks = myManager.getTaskHierarchy().getNestedTasks(task);
       for (int i = 0; i < nestedTasks.length; i++) {
         removeTask(nestedTasks[i]);
@@ -799,7 +799,7 @@ public class TaskManagerImpl implements TaskManager {
   private final class FacadeImpl implements TaskContainmentHierarchyFacade {
     // private final Task myRoot;
 
-    private List<Task> myPathBuffer = new ArrayList<Task>();
+    private List<Task> myPathBuffer = new ArrayList<>();
 
     // public FacadeImpl(Task root) {
     // myRoot = root;
@@ -812,7 +812,7 @@ public class TaskManagerImpl implements TaskManager {
 
     @Override
     public Task[] getDeepNestedTasks(Task container) {
-      ArrayList<Task> result = new ArrayList<Task>();
+      ArrayList<Task> result = new ArrayList<>();
       addDeepNestedTasks(container, result);
       return result.toArray(new Task[result.size()]);
     }
@@ -912,11 +912,11 @@ public class TaskManagerImpl implements TaskManager {
       if (task1 == task2) {
         return 0;
       }
-      List<Task> buffer1 = new ArrayList<Task>();
+      List<Task> buffer1 = new ArrayList<>();
       for (Task container = task1; container != null; container = getContainer(container)) {
         buffer1.add(0, container);
       }
-      List<Task> buffer2 = new ArrayList<Task>();
+      List<Task> buffer2 = new ArrayList<>();
       for (Task container = task2; container != null; container = getContainer(container)) {
         buffer2.add(0, container);
       }
@@ -1047,7 +1047,7 @@ public class TaskManagerImpl implements TaskManager {
   public Map<Task, Task> importData(TaskManager taskManager,
       Map<CustomPropertyDefinition, CustomPropertyDefinition> customPropertyMapping) {
     Task importRoot = taskManager.getRootTask();
-    Map<Task, Task> original2imported = new LinkedHashMap<Task, Task>();
+    Map<Task, Task> original2imported = new LinkedHashMap<>();
     importData(importRoot, getRootTask(), customPropertyMapping, original2imported);
     TaskDependency[] deps = taskManager.getDependencyCollection().getDependencies();
     for (int i = 0; i < deps.length; i++) {
