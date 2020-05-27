@@ -149,7 +149,7 @@ public class ResourceTagHandler extends AbstractTagHandler implements ParsingLis
       }
       myCurrentResource = hr;
     } catch (NumberFormatException e) {
-      System.out.println("ERROR in parsing XML File id is not numeric: " + e.toString());
+      GPLogger.log("ERROR in parsing XML File id is not numeric: " + e.toString());
       return;
     }
 
@@ -159,7 +159,7 @@ public class ResourceTagHandler extends AbstractTagHandler implements ParsingLis
       String roleID = atts.getValue("function");
       myLateResource2roleBinding.put(hr, roleID);
     } catch (NumberFormatException e) {
-      System.out.println("ERROR in parsing XML File function id is not numeric: " + e.toString());
+      GPLogger.log("ERROR in parsing XML File function id is not numeric: " + e.toString());
     }
   }
 
@@ -205,7 +205,7 @@ public class ResourceTagHandler extends AbstractTagHandler implements ParsingLis
       }
     }
     if (!myLateResource2roleBinding.isEmpty()) {
-      System.err.println("[ResourceTagHandler] parsingFinished(): not found roles:\n" + myLateResource2roleBinding);
+      GPLogger.log("[ResourceTagHandler] parsingFinished(): not found roles:\n" + myLateResource2roleBinding);
     }
   }
 }

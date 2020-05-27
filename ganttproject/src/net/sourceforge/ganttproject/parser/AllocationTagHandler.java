@@ -114,7 +114,7 @@ public class AllocationTagHandler extends AbstractTagHandler implements  Parsing
       if (rolePersistendIDString != null)
         myLateAssigmnent2roleBinding.put(assignment, rolePersistendIDString);
     } catch (NumberFormatException e) {
-      System.out.println("ERROR in parsing XML File function id is not numeric: " + e.toString());
+      GPLogger.log("ERROR in parsing XML File function id is not numeric: " + e.toString());
     }
 
     assignment.setLoad(load);
@@ -167,7 +167,7 @@ public class AllocationTagHandler extends AbstractTagHandler implements  Parsing
       }
     }
     if (!myLateAssigmnent2roleBinding.isEmpty()) {
-      System.err.println("[ResourceTagHandler] parsingFinished(): not found roles:\n" + myLateAssigmnent2roleBinding);
+      GPLogger.log("[ResourceTagHandler] parsingFinished(): not found roles:\n" + myLateAssigmnent2roleBinding);
     }
   }
 }
