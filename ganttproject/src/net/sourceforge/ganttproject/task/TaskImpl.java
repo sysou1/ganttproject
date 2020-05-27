@@ -609,15 +609,30 @@ public class TaskImpl implements Task {
     public final Exception myException = new Exception();
     @Override
     public void commit() {
+      boolean oneElementNotNull = false;
+      GanttCalendar oldStart;
+      GanttCalendar oldEnd;
       try {
+        oldStart = TaskImpl.this.getStart();
+        oldEnd = TaskImpl.this.getEnd();
+        if (myShiftChange != null) {
+          oldStart = (GanttCalendar) myShiftChange.first().myOldValue;
+          oldEnd = (GanttCalendar) myShiftChange.second().myOldValue;
+          oneElementNotNull = true;
+        }
         if (myStartChange != null) {
           GanttCalendar start = getStart();
           TaskImpl.this.setStart(start);
+          oneElementNotNull = true;
+          oldStart = (GanttCalendar) myStartChange.myOldValue;
+          if (TaskImpl.this.isSupertask())
+            TaskImpl.this.adjustNestedTasks();
         }
         if (myDurationChange != null) {
           TimeDuration duration = getDuration();
           TaskImpl.this.setDuration(duration);
           myEndChange = null;
+          oneElementNotNull = true;
         }
         if (myCompletionPercentageChange != null) {
           int newValue = getCompletionPercentage();
@@ -628,10 +643,13 @@ public class TaskImpl implements Task {
           if (end.getTime().compareTo(TaskImpl.this.getStart().getTime()) > 0) {
             TaskImpl.this.setEnd(end);
           }
+          oneElementNotNull = true;
+          oldEnd = (GanttCalendar) myEndChange.myOldValue;
         }
         if (myThirdChange != null) {
           GanttCalendar third = getThird();
           TaskImpl.this.setThirdDate(third);
+          oneElementNotNull = true;
         }
         for (Runnable command : myCommands) {
           command.run();
@@ -642,26 +660,7 @@ public class TaskImpl implements Task {
       } finally {
         TaskImpl.this.myMutator = null;
       }
-      if (myStartChange != null && TaskImpl.this.isSupertask()) {
-        TaskImpl.this.adjustNestedTasks();
-      }
-      if ((myStartChange != null || myEndChange != null || myDurationChange != null || myShiftChange != null || myThirdChange != null) && areEventsEnabled()) {
-        GanttCalendar oldStart;
-        if (myStartChange != null) {
-          oldStart = (GanttCalendar) myStartChange.myOldValue;
-        } else if (myShiftChange != null) {
-          oldStart = (GanttCalendar) myShiftChange.first().myOldValue;
-        } else {
-          oldStart = TaskImpl.this.getStart();
-        }
-        GanttCalendar oldEnd;
-        if (myEndChange != null) {
-          oldEnd = (GanttCalendar) myEndChange.myOldValue;
-        } else if (myShiftChange != null){
-          oldEnd = (GanttCalendar) myShiftChange.second().myOldValue;
-        } else {
-          oldEnd = TaskImpl.this.getEnd();
-        }
+      if (oneElementNotNull && areEventsEnabled()) {
         myManager.fireTaskScheduleChanged(TaskImpl.this, oldStart, oldEnd);
       }
     }
