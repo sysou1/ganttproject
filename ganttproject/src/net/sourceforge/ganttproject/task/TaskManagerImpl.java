@@ -239,7 +239,6 @@ public class TaskManagerImpl implements TaskManager {
 
     };
     myFacadeFactory = containmentFacadeFactory == null ? new FacadeFactoryImpl() : containmentFacadeFactory;
-    // clear();
     myRoot = createRootTask();
 
     FindPossibleDependeesAlgorithm alg1 = new FindPossibleDependeesAlgorithmImpl() {
@@ -308,7 +307,6 @@ public class TaskManagerImpl implements TaskManager {
     myTaskMap.clear();
     myMaxID.set(0);
     myDependencyCollection.clear();
-    // createRootTask();
     fireTaskModelReset();
   }
 
@@ -717,8 +715,6 @@ public class TaskManagerImpl implements TaskManager {
     if (areEventsEnabled) {
       TaskScheduleEvent e = new TaskScheduleEvent(changedTask, oldStartDate, oldFinishDate, changedTask.getStart(),
           changedTask.getEnd());
-      // List copy = new ArrayList(myListeners);
-      // myListeners.clear();
       for (int i = 0; i < myListeners.size(); i++) {
         TaskListener next = myListeners.get(i);
         next.taskScheduleChanged(e);
@@ -797,13 +793,8 @@ public class TaskManagerImpl implements TaskManager {
   }
 
   private final class FacadeImpl implements TaskContainmentHierarchyFacade {
-    // private final Task myRoot;
 
     private List<Task> myPathBuffer = new ArrayList<>();
-
-    // public FacadeImpl(Task root) {
-    // myRoot = root;
-    // }
 
     @Override
     public Task[] getNestedTasks(Task container) {
@@ -1016,11 +1007,6 @@ public class TaskManagerImpl implements TaskManager {
   }
 
   private class FacadeFactoryImpl implements TaskContainmentHierarchyFacade.Factory {
-    // private final Task myRoot;
-    //
-    // FacadeFactoryImpl(Task root) {
-    // myRoot = root;
-    // }
 
     @Override
     public TaskContainmentHierarchyFacade createFacade() {
@@ -1030,10 +1016,7 @@ public class TaskManagerImpl implements TaskManager {
 
   @Override
   public TaskContainmentHierarchyFacade getTaskHierarchy() {
-    // if (myTaskContainment==null) {
     return myFacadeFactory.createFacade();
-    // }
-    // return myTaskContainment;
   }
 
   @Override
