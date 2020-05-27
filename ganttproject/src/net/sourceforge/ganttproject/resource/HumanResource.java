@@ -20,10 +20,7 @@ package net.sourceforge.ganttproject.resource;
 
 import biz.ganttproject.core.calendar.GanttDaysOff;
 import com.google.common.base.Strings;
-import net.sourceforge.ganttproject.CustomProperty;
-import net.sourceforge.ganttproject.CustomPropertyDefinition;
-import net.sourceforge.ganttproject.CustomPropertyHolder;
-import net.sourceforge.ganttproject.CustomPropertyManager;
+import net.sourceforge.ganttproject.*;
 import net.sourceforge.ganttproject.language.GanttLanguage;
 import net.sourceforge.ganttproject.roles.Role;
 import net.sourceforge.ganttproject.task.CustomColumnsException;
@@ -181,7 +178,7 @@ public class HumanResource implements CustomPropertyHolder {
 
   public Role getRole() {
     if (myRole == null) {
-      System.err.println("[HumanResource] getRole(): I have no role :( name=" + getName());
+      GPLogger.log("[HumanResource] getRole(): I have no role :( name=" + getName());
     }
     return myRole;
   }
@@ -204,7 +201,7 @@ public class HumanResource implements CustomPropertyHolder {
       myCustomProperties.setValue(def, value);
       fireResourceChanged();
     } catch (CustomColumnsException e) {
-      e.printStackTrace();
+      GPLogger.log(e);
     }
   }
 

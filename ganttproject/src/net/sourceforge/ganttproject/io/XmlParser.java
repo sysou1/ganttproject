@@ -63,15 +63,12 @@ public class XmlParser extends DefaultHandler2 {
   }
 
   @Override
-  public void startElement(String namespaceURI, String sName, // simple
-      // name
-      String qName, // qualified name
-      Attributes attrs) {
+  public void startElement(String namespaceURI, String sName, String qName, Attributes attrs) {
     for (TagHandler next : myTagHandlers) {
       try {
         next.startElement(namespaceURI, sName, qName, attrs);
       } catch (FileFormatException e) {
-        System.err.println(e.getMessage());
+        GPLogger.log(e);
       }
     }
   }
