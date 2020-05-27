@@ -196,13 +196,12 @@ public class TaskImpl implements Task {
 
   @Override
   public Task unpluggedClone() {
-    TaskImpl result = new TaskImpl(myManager, this, true) {
+    return new TaskImpl(myManager, this, true) {
       @Override
       public boolean isSupertask() {
         return false;
       }
     };
-    return result;
   }
 
   class MutatorException extends RuntimeException {
@@ -303,12 +302,8 @@ public class TaskImpl implements Task {
             }
             URL relative = new URL(context, getWebLink());
             return new URI(URLEncoder.encode(relative.toString(), "utf-8"));
-          } catch (URISyntaxException e){
-            // Do nothing
-          } catch (MalformedURLException e) {
-            // Do nothing
-          } catch (UnsupportedEncodingException e) {
-            // Do nothing
+          } catch (URISyntaxException | MalformedURLException | UnsupportedEncodingException e){
+            GPLogger.log(e);
           }
           return null;
         }
@@ -334,7 +329,7 @@ public class TaskImpl implements Task {
 
   @Override
   public boolean isMilestone() {
-    return isMilestone && Boolean.TRUE == myManager.isZeroMilestones();
+    return isMilestone && myManager.isZeroMilestones();
   }
 
   public boolean isLegacyMilestone() {
@@ -726,7 +721,9 @@ public class TaskImpl implements Task {
 
     @Override
     public void setStart(final GanttCalendar start) {
-      assert start != null;
+      if(start == null) {
+        throw new IllegalArgumentException("Start argument cannot be null");
+      }
       GanttCalendar currentStart = getStart();
       if (currentStart != null && start.equals(currentStart)) {
         return;
@@ -808,7 +805,7 @@ public class TaskImpl implements Task {
         myCompletionPercentageChange = new FieldChange();
         myCompletionPercentageChange.myEventSender = myProgressEventSender;
       }
-      myCompletionPercentageChange.setValue(new Integer(percentage));
+      myCompletionPercentageChange.setValue(percentage);
     }
 
     @Override
@@ -1048,7 +1045,10 @@ public class TaskImpl implements Task {
 
   @Override
   public void setDuration(TimeDuration length) {
-    assert length.getLength() >= 0 : "An attempt to set length=" + length + " to task=" + this;
+
+    if(length.getLength() < 0) {
+      throw new IllegalArgumentException("An attempt to set length=" + length + " to task=" + this);
+    }
 
     myLength = length;
     myEnd = null;
