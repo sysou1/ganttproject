@@ -229,6 +229,7 @@ public class GanttXMLOpen implements GPParser {
 
     @Override
     public void parsingStarted() {
+      throw new UnsupportedOperationException();
     }
 
     @Override

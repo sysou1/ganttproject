@@ -191,6 +191,7 @@ public class ResourceTagHandler extends AbstractTagHandler implements ParsingLis
 
   @Override
   public void parsingStarted() {
+    throw new UnsupportedOperationException();
   }
 
   @Override

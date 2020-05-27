@@ -153,6 +153,7 @@ public class AllocationTagHandler extends AbstractTagHandler implements  Parsing
 
   @Override
   public void parsingStarted() {
+    throw new UnsupportedOperationException();
   }
 
   @Override
