@@ -50,9 +50,9 @@ public class GanttXMLOpen implements GPParser {
   /** 0-->description of project, 1->note for task */
   int typeChar = -1;
 
-  private final ArrayList<TagHandler> myTagHandlers = new ArrayList<TagHandler>();
+  private final ArrayList<TagHandler> myTagHandlers = new ArrayList<>();
 
-  private final ArrayList<ParsingListener> myListeners = new ArrayList<ParsingListener>();
+  private final ArrayList<ParsingListener> myListeners = new ArrayList<>();
 
   private final ParsingContext myContext;
 

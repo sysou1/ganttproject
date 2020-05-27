@@ -47,7 +47,7 @@ public class ResourceTagHandler extends AbstractTagHandler implements ParsingLis
 
   private HumanResource myCurrentResource;
 
-  private final HashMap<HumanResource, String> myLateResource2roleBinding = new HashMap<HumanResource, String>();
+  private final HashMap<HumanResource, String> myLateResource2roleBinding = new HashMap<>();
 
   private final HumanResourceManager myResourceManager;
 

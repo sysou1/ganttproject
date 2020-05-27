@@ -31,7 +31,7 @@ import net.sourceforge.ganttproject.CustomProperty;
 
 public class OverwritingMerger implements HumanResourceMerger {
   private final EnumerationOption myMergeOption;
-  private final Map<String, HumanResource> myCache = new HashMap<String, HumanResource>();
+  private final Map<String, HumanResource> myCache = new HashMap<>();
 
   public OverwritingMerger(EnumerationOption mergeOption) {
     myMergeOption = mergeOption;

@@ -46,7 +46,7 @@ public class AllocationTagHandler extends AbstractTagHandler implements  Parsing
 
   private RoleManager myRoleManager;
 
-  private final HashMap<ResourceAssignment, String> myLateAssigmnent2roleBinding = new HashMap<ResourceAssignment, String>();
+  private final HashMap<ResourceAssignment, String> myLateAssigmnent2roleBinding = new HashMap<>();
 
   public AllocationTagHandler(HumanResourceManager resourceMgr, TaskManager taskMgr, RoleManager roleMgr) {
     super("allocation");
