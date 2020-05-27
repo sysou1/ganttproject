@@ -1217,7 +1217,7 @@ public class TaskManagerImpl implements TaskManager {
   @Override
   public void setZeroMilestones(Boolean b) {
     isZeroMilestones = b;
-    if (isZeroMilestones) {
+    if (isZeroMilestones != null && isZeroMilestones) {
       List<Task> milestones = Lists.newArrayList();
       for (Task t : getTasks()) {
         if (t.isMilestone()) {
