@@ -107,10 +107,6 @@ public class AllocationTagHandler extends AbstractTagHandler implements  Parsing
     if (task == null) {
       throw new FileFormatException("Task with id=" + taskId + " not found");
     }
-    // TaskMutator mutator = task.createMutator();
-    // ResourceAssignment assignment = mutator.addResource(human);
-    // assignment.setLoad(load);
-    // mutator.commit();
 
     ResourceAssignment assignment = task.getAssignmentCollection().addAssignment(human);
 

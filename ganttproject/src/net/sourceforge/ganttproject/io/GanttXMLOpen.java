@@ -78,7 +78,7 @@ public class GanttXMLOpen implements GPParser {
     myUIConfig = uiConfig;
     this.viewIndex = 0;
 
-    this.ganttDividerLocation = 300; // TODO is this arbitrary value right ?
+    this.ganttDividerLocation = 300;
     this.resourceDividerLocation = 300;
     myUIFacade = uiFacade;
   }
@@ -148,9 +148,9 @@ public class GanttXMLOpen implements GPParser {
     @Override
     public void startElement(String namespaceURI, String sName, String qName, Attributes attrs) {
       clearCdata();
-      String eName = sName; // element name
+      String eName = sName;
       if ("".equals(eName)) {
-        eName = qName; // not namespace aware
+        eName = qName;
       }
       setTagStarted(myTags.contains(eName));
       hasCdata = "description".equals(eName) || "notes".equals(eName);
@@ -159,10 +159,9 @@ public class GanttXMLOpen implements GPParser {
       }
       if (attrs != null) {
         for (int i = 0; i < attrs.getLength(); i++) {
-          String aName = attrs.getLocalName(i); // Attr name
+          String aName = attrs.getLocalName(i);
           if ("".equals(aName)) {
             aName = attrs.getQName(i);
-            // The project part
           }
           if (eName.equals("project")) {
             if (aName.equals("name")) {
@@ -172,7 +171,6 @@ public class GanttXMLOpen implements GPParser {
             } else if (aName.equals("webLink")) {
               myProjectInfo.setWebLink(attrs.getValue(i));
             }
-            // TODO: 1.12 repair scrolling to the saved date
             else if (aName.equals("view-date")) {
               myUIFacade.getScrollingManager().scrollTo(GanttCalendar.parseXMLDate(attrs.getValue(i)).getTime());
             } else if (aName.equals("view-index")) {

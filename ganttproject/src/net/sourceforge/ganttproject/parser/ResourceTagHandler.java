@@ -158,7 +158,6 @@ public class ResourceTagHandler extends AbstractTagHandler implements ParsingLis
     try {
       String roleID = atts.getValue("function");
       myLateResource2roleBinding.put(hr, roleID);
-      // hr.setFunction(Integer.parseInt());
     } catch (NumberFormatException e) {
       System.out.println("ERROR in parsing XML File function id is not numeric: " + e.toString());
     }
@@ -168,10 +167,7 @@ public class ResourceTagHandler extends AbstractTagHandler implements ParsingLis
     return myResourceManager;
   }
 
-  // private GanttPeoplePanel myPeople;
-
   private Role findRole(String persistentIDasString) {
-    //
     RolePersistentID persistentID = new RolePersistentID(persistentIDasString);
     String rolesetName = persistentID.getRoleSetID();
     int roleID = persistentID.getRoleID();
@@ -199,7 +195,6 @@ public class ResourceTagHandler extends AbstractTagHandler implements ParsingLis
 
   @Override
   public void parsingFinished() {
-    // System.err.println("[ResourceTagHandler] parsingFinished():");
     for (Iterator<Entry<HumanResource, String>> lateBindingEntries = myLateResource2roleBinding.entrySet().iterator(); lateBindingEntries.hasNext();) {
       Map.Entry<HumanResource, String> nextEntry = lateBindingEntries.next();
       String persistentID = nextEntry.getValue();
