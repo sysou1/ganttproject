@@ -503,7 +503,7 @@ public class TaskManagerImpl implements TaskManager {
 
   @Override
   public String encode(TimeDuration taskLength) {
-    StringBuffer result = new StringBuffer(String.valueOf(taskLength.getLength()));
+    StringBuilder result = new StringBuilder(String.valueOf(taskLength.getLength()));
     result.append(myConfig.getTimeUnitStack().encode(taskLength.getTimeUnit()));
     return result.toString();
   }
@@ -511,7 +511,7 @@ public class TaskManagerImpl implements TaskManager {
   @Override
   public TimeDuration createLength(String lengthAsString) throws DurationParsingException {
     int state = 0;
-    StringBuffer valueBuffer = new StringBuffer();
+    StringBuilder valueBuffer = new StringBuilder();
     Integer currentValue = null;
     TimeDuration currentLength = null;
     lengthAsString += " ";
@@ -930,8 +930,10 @@ public class TaskManagerImpl implements TaskManager {
         Task root1 = buffer1.get(i);
         Task root2 = buffer2.get(i);
         if (root1 != root2) {
-          assert commonRoot != null : "Failure comparing task=" + task1 + " and task=" + task2 + "\n. Path1=" + buffer1
-              + "\nPath2=" + buffer2;
+          if(commonRoot == null) {
+            throw new IllegalArgumentException("Failure comparing task=" + task1 + " and task=" + task2 + "\n. Path1="
+                    + buffer1 + "\nPath2=" + buffer2);
+          }
           Task[] nestedTasks = commonRoot.getNestedTasks();
           for (int j = 0; j < nestedTasks.length; j++) {
             if (nestedTasks[j] == root1) {
@@ -987,12 +989,12 @@ public class TaskManagerImpl implements TaskManager {
 
     @Override
     public List<Task> breadthFirstSearch(Task root, final boolean includeRoot) {
-      final Task _root = (root == null) ? getRootTask() : root;
+      final Task finalRoot = (root == null) ? getRootTask() : root;
       final List<Task> result = Lists.newArrayList();
-      breadthFirstSearch(_root, new Predicate<Pair<Task,Task>>() {
-        public boolean apply(Pair<Task, Task> parent_child) {
-          if (includeRoot || parent_child.first() != null) {
-            result.add(parent_child.second());
+      breadthFirstSearch(finalRoot, new Predicate<Pair<Task,Task>>() {
+        public boolean apply(Pair<Task, Task> parentChild) {
+          if (includeRoot || parentChild.first() != null) {
+            result.add(parentChild.second());
           }
           return true;
         }
@@ -1215,7 +1217,7 @@ public class TaskManagerImpl implements TaskManager {
   @Override
   public void setZeroMilestones(Boolean b) {
     isZeroMilestones = b;
-    if (Boolean.TRUE == isZeroMilestones) {
+    if (isZeroMilestones) {
       List<Task> milestones = Lists.newArrayList();
       for (Task t : getTasks()) {
         if (t.isMilestone()) {
