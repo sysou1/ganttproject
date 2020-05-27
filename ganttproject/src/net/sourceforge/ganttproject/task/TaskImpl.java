@@ -668,24 +668,23 @@ public class TaskImpl implements Task {
 
   public Task shift(float unitCount) {
     Task clone = unpluggedClone();
-    if (unitCount != 0) {
-      Date newStart;
-      if (unitCount > 0) {
+    Date newStart;
+    if (unitCount > 0) {
         TimeDuration length = myManager.createLength(myLength.getTimeUnit(), unitCount);
         newStart = RESTLESS_CALENDAR.shiftDate(myStart.getTime(), length);
         if (0 == (getManager().getCalendar().getDayMask(newStart) & DayMask.WORKING)) {
           newStart = getManager().getCalendar().findClosest(newStart, myLength.getTimeUnit(), MoveDirection.FORWARD, DayType.WORKING);
         }
-      } else {
+    } else {
         newStart = RESTLESS_CALENDAR.shiftDate(clone.getStart().getTime(),
             getManager().createLength(clone.getDuration().getTimeUnit(), (long) unitCount));
         if (0 == (getManager().getCalendar().getDayMask(newStart) & DayMask.WORKING)) {
           newStart = getManager().getCalendar().findClosest(newStart, myLength.getTimeUnit(), MoveDirection.BACKWARD, DayType.WORKING);
         }
       }
-      clone.setStart(CalendarFactory.createGanttCalendar(newStart));
-      clone.setDuration(myLength);
-    }
+    clone.setStart(CalendarFactory.createGanttCalendar(newStart));
+    clone.setDuration(myLength);
+
     return clone;
   }
 
