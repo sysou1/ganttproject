@@ -212,11 +212,6 @@ public class GanttXMLOpen implements GPParser {
     public boolean hasCdata() {
       return hasCdata;
     }
-
-    @Override
-    public void appendCdata(String cdata) {
-      super.appendCdata(cdata);
-    }
   }
 
   @Override

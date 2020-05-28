@@ -52,11 +52,6 @@ public class XmlParser extends DefaultHandler2 {
   }
 
   @Override
-  public void startDocument() throws SAXException {
-    super.startDocument();
-  }
-
-  @Override
   public void endDocument() {
     for (ParsingListener l : myListeners) {
       l.parsingFinished();
