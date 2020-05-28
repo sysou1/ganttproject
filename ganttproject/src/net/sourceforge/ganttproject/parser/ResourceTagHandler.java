@@ -185,8 +185,7 @@ public class ResourceTagHandler extends AbstractTagHandler implements ParsingLis
     } else {
       roleSet = myRoleManager.getRoleSet(rolesetName);
     }
-    Role result = roleSet.findRole(roleID);
-    return result;
+    return roleSet.findRole(roleID);
   }
 
   @Override

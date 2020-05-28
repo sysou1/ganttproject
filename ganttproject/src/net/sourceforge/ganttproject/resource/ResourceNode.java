@@ -36,7 +36,9 @@ public class ResourceNode extends ResourceTableNode {
 
   public ResourceNode(HumanResource res) {
     super(res, ourApplicableColumns);
-    assert res != null;
+    if(res == null) {
+      throw new IllegalArgumentException("Human Resource is null!");
+    }
     resource = res;
   }
 
@@ -102,7 +104,9 @@ public class ResourceNode extends ResourceTableNode {
       setDefaultRole((Role) value);
       return;
     case STANDARD_RATE:
-      assert value instanceof Double : "Rate accepts numeric values";
+      if(!value.getClass().equals(Double.class)) {
+        throw new IllegalArgumentException("Rate accepts only numeric values");
+      }
       getResource().setStandardPayRate(BigDecimal.valueOf((Double)value));
     }
   }

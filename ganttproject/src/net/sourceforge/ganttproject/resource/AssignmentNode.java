@@ -78,10 +78,8 @@ public class AssignmentNode extends ResourceTableNode {
 
   @Override
   public void setStandardField(ResourceDefaultColumn def, Object value) {
-    switch (def) {
-    case ROLE_IN_TASK:
+    if(def.equals(ResourceDefaultColumn.ROLE_IN_TASK)) {
       setRoleForAssigment((Role) value);
-      return;
     }
   }
 }
