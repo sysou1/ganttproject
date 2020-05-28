@@ -508,92 +508,26 @@ public class TaskManagerImpl implements TaskManager {
     return result.toString();
   }
 
+  private int state;
+  private Integer currentValue;
+  private StringBuilder valueBuffer;
+  private TimeDuration currentLength;
+
   @Override
   public TimeDuration createLength(String lengthAsString) throws DurationParsingException {
-    int state = 0;
-    StringBuilder valueBuffer = new StringBuilder();
-    Integer currentValue = null;
-    TimeDuration currentLength = null;
+    state = 0;
+    valueBuffer = new StringBuilder();
+    currentValue = null;
+    currentLength = null;
     lengthAsString += " ";
     for (int i = 0; i < lengthAsString.length(); i++) {
       char nextChar = lengthAsString.charAt(i);
       if (Character.isDigit(nextChar)) {
-        switch (state) {
-        case 0:
-          if (currentValue != null) {
-            throw new DurationParsingException();
-          }
-          state = 1;
-          valueBuffer.setLength(0);
-        case 1:
-          valueBuffer.append(nextChar);
-          break;
-        case 2:
-          TimeUnit timeUnit = findTimeUnit(valueBuffer.toString());
-          if (timeUnit == null) {
-            throw new DurationParsingException(valueBuffer.toString());
-          }
-          assert currentValue != null;
-          TimeDuration localResult = createLength(timeUnit, currentValue.floatValue());
-          if (currentLength == null) {
-            currentLength = localResult;
-          } else {
-            if (currentLength.getTimeUnit().isConstructedFrom(timeUnit)) {
-              float recalculatedLength = currentLength.getLength(timeUnit);
-              currentLength = createLength(timeUnit, localResult.getValue() + recalculatedLength);
-            } else {
-              throw new DurationParsingException();
-            }
-          }
-          state = 1;
-          currentValue = null;
-          valueBuffer.setLength(0);
-          valueBuffer.append(nextChar);
-          break;
-        }
+        CharacterIsDigit(nextChar);
       } else if (Character.isWhitespace(nextChar)) {
-        switch (state) {
-        case 0:
-          break;
-        case 1:
-          currentValue = Integer.valueOf(valueBuffer.toString());
-          state = 0;
-          break;
-        case 2:
-          TimeUnit timeUnit = findTimeUnit(valueBuffer.toString());
-          if (timeUnit == null) {
-            throw new DurationParsingException(valueBuffer.toString());
-          }
-          assert currentValue != null;
-          TimeDuration localResult = createLength(timeUnit, currentValue.floatValue());
-          if (currentLength == null) {
-            currentLength = localResult;
-          } else {
-            if (currentLength.getTimeUnit().isConstructedFrom(timeUnit)) {
-              float recalculatedLength = currentLength.getLength(timeUnit);
-              currentLength = createLength(timeUnit, localResult.getValue() + recalculatedLength);
-            } else {
-              throw new DurationParsingException();
-            }
-          }
-          state = 0;
-          currentValue = null;
-          break;
-        }
+        CharacterIsWhitespace(nextChar);
       } else {
-        switch (state) {
-        case 1:
-          currentValue = Integer.valueOf(valueBuffer.toString());
-        case 0:
-          if (currentValue == null) {
-            throw new DurationParsingException("Failed to parse value=" + lengthAsString);
-          }
-          state = 2;
-          valueBuffer.setLength(0);
-        case 2:
-          valueBuffer.append(nextChar);
-          break;
-        }
+        CharacterIsChar(nextChar);
       }
     }
     if (currentValue != null) {
@@ -602,6 +536,89 @@ public class TaskManagerImpl implements TaskManager {
       currentLength = createLength(dayUnit, currentValue.floatValue());
     }
     return currentLength;
+  }
+
+  private void CharacterIsDigit(char nextChar){
+    switch (state) {
+      case 0:
+        if (currentValue != null) {
+          throw new DurationParsingException();
+        }
+        state = 1;
+        valueBuffer.setLength(0);
+      case 1:
+        valueBuffer.append(nextChar);
+        break;
+      case 2:
+        TimeUnit timeUnit = findTimeUnit(valueBuffer.toString());
+        if (timeUnit == null) {
+          throw new DurationParsingException(valueBuffer.toString());
+        }
+        assert currentValue != null;
+        TimeDuration localResult = createLength(timeUnit, currentValue.floatValue());
+        if (currentLength == null) {
+          currentLength = localResult;
+        } else {
+          if (currentLength.getTimeUnit().isConstructedFrom(timeUnit)) {
+            float recalculatedLength = currentLength.getLength(timeUnit);
+            currentLength = createLength(timeUnit, localResult.getValue() + recalculatedLength);
+          } else {
+            throw new DurationParsingException();
+          }
+        }
+        state = 1;
+        currentValue = null;
+        valueBuffer.setLength(0);
+        valueBuffer.append(nextChar);
+        break;
+    }
+  }
+
+  private void CharacterIsWhitespace(char nextCar){
+    switch (state) {
+      case 0:
+        break;
+      case 1:
+        currentValue = Integer.valueOf(valueBuffer.toString());
+        state = 0;
+        break;
+      case 2:
+        TimeUnit timeUnit = findTimeUnit(valueBuffer.toString());
+        if (timeUnit == null) {
+          throw new DurationParsingException(valueBuffer.toString());
+        }
+        assert currentValue != null;
+        TimeDuration localResult = createLength(timeUnit, currentValue.floatValue());
+        if (currentLength == null) {
+          currentLength = localResult;
+        } else {
+          if (currentLength.getTimeUnit().isConstructedFrom(timeUnit)) {
+            float recalculatedLength = currentLength.getLength(timeUnit);
+            currentLength = createLength(timeUnit, localResult.getValue() + recalculatedLength);
+          } else {
+            throw new DurationParsingException();
+          }
+        }
+        state = 0;
+        currentValue = null;
+        break;
+    }
+  }
+
+  private void CharacterIsChar(char nextChar){
+    switch (state) {
+      case 1:
+        currentValue = Integer.valueOf(valueBuffer.toString());
+      case 0:
+        if (currentValue == null) {
+          throw new DurationParsingException("Failed to parse value");
+        }
+        state = 2;
+        valueBuffer.setLength(0);
+      case 2:
+        valueBuffer.append(nextChar);
+        break;
+    }
   }
 
   private TimeUnit findTimeUnit(String code) {
