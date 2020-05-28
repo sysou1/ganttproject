@@ -106,30 +106,20 @@ public class LoadDistribution {
 
     myTasksLoads.add(taskLoad);
 
-    int idxStart = -1;
     float currentLoad = 0;
-    if (startDate == null) {
-      idxStart = 0;
-    } else {
-      for (int i = 1; i < loads.size(); i++) {
-        Load nextLoad = loads.get(i);
-        if (startDate.compareTo(nextLoad.startDate) >= 0) {
-          currentLoad = loads.get(i).getLoadValue();
-        }
-        if (startDate.compareTo(nextLoad.startDate) > 0) {
-          continue;
-        }
-        idxStart = i;
-        if (startDate.compareTo(nextLoad.startDate) < 0) {
-          loads.add(i, new Load(startDate, null, currentLoad, null));
-        }
-        break;
-      }
-    }
+    int idxStart = getIdxStart(startDate, loads, currentLoad);
     if (idxStart == -1) {
       idxStart = loads.size();
       loads.add(new Load(startDate, null, 0, t));
     }
+    int idxEnd = getIdxEnd(endDate, loadValue, loads, idxStart);
+    if (idxEnd == -1) {
+      idxEnd = loads.size();
+      loads.add(new Load(endDate, null, 0, t));
+    }
+  }
+
+  private int getIdxEnd(Date endDate, float loadValue, List<Load> loads, int idxStart) {
     int idxEnd = -1;
     if (endDate == null) {
       idxEnd = loads.size() - 1;
@@ -148,10 +138,30 @@ public class LoadDistribution {
         break;
       }
     }
-    if (idxEnd == -1) {
-      idxEnd = loads.size();
-      loads.add(new Load(endDate, null, 0, t));
+    return idxEnd;
+  }
+
+  private int getIdxStart(Date startDate, List<Load> loads, float currentLoad) {
+    int idxStart = -1;
+    if (startDate == null) {
+      idxStart = 0;
+    } else {
+      for (int i = 1; i < loads.size(); i++) {
+        Load nextLoad = loads.get(i);
+        if (startDate.compareTo(nextLoad.startDate) >= 0) {
+          currentLoad = loads.get(i).getLoadValue();
+        }
+        if (startDate.compareTo(nextLoad.startDate) > 0) {
+          continue;
+        }
+        idxStart = i;
+        if (startDate.compareTo(nextLoad.startDate) < 0) {
+          loads.add(i, new Load(startDate, null, currentLoad, null));
+        }
+        break;
+      }
     }
+    return idxStart;
   }
 
   public HumanResource getResource() {
