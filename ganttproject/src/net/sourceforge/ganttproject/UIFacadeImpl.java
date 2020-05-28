@@ -74,6 +74,7 @@ import net.sourceforge.ganttproject.undo.GPUndoManager;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.ProgressProvider;
+import org.jetbrains.annotations.NotNull;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -178,27 +179,8 @@ class UIFacadeImpl extends ProgressProvider implements UIFacade {
     dateSampleOption.setWritable(false);
     final DefaultBooleanOption dateFormatSwitchOption = new DefaultBooleanOption("ui.dateFormat.switch", true);
 
-    myLanguageOption = new LanguageOption() {
-      {
-        GanttLanguage.getInstance().addListener(new GanttLanguage.Listener() {
-          @Override
-          public void languageChanged(GanttLanguage.Event event) {
-            Locale selected = getSelectedValue();
-            reloadValues(GanttLanguage.getInstance().getAvailableLocales());
-            setSelectedValue(selected);
-          }
-        });
-      }
+    myLanguageOption = createLanguageOption();
 
-      @Override
-      protected void applyLocale(Locale locale) {
-        if (locale == null) {
-          // Selected Locale was not available, so use default Locale
-          locale = Locale.getDefault();
-        }
-        GanttLanguage.getInstance().setLocale(locale);
-      }
-    };
     myLanguageOption.addChangeValueListener(new ChangeValueListener() {
       @Override
       public void changeValue(ChangeValueEvent event) {
@@ -251,6 +233,31 @@ class UIFacadeImpl extends ProgressProvider implements UIFacade {
     myLogoOptions.setTitled(false);
     addOptions(myOptions);
     addOptions(myLogoOptions);
+  }
+
+  @NotNull
+  private LanguageOption createLanguageOption() {
+    return new LanguageOption() {
+      {
+        GanttLanguage.getInstance().addListener(new GanttLanguage.Listener() {
+          @Override
+          public void languageChanged(GanttLanguage.Event event) {
+            Locale selected = getSelectedValue();
+            reloadValues(GanttLanguage.getInstance().getAvailableLocales());
+            setSelectedValue(selected);
+          }
+        });
+      }
+
+      @Override
+      protected void applyLocale(Locale locale) {
+        if (locale == null) {
+          // Selected Locale was not available, so use default Locale
+          locale = Locale.getDefault();
+        }
+        GanttLanguage.getInstance().setLocale(locale);
+      }
+    };
   }
 
   private String[] getFontFamilies() {
