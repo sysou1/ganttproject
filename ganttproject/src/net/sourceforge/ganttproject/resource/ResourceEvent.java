@@ -39,10 +39,10 @@ public class ResourceEvent extends EventObject {
     return myResources;
   }
 
-  private HumanResource[] myResources;
+  private final HumanResource[] myResources;
 
-  private HumanResourceManager myManager;
+  private final HumanResourceManager myManager;
 
-  private HumanResource myResource;
+  private final HumanResource myResource;
 
 }
