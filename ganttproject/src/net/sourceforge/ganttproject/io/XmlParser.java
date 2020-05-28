@@ -28,6 +28,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.ext.DefaultHandler2;
 
+import javax.xml.XMLConstants;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -104,12 +105,11 @@ public class XmlParser extends DefaultHandler2 {
   }
 
   public void parse(InputStream inStream) throws IOException {
-    // Use the default (non-validating) parser
     SAXParserFactory factory = SAXParserFactory.newInstance();
     try {
-      // Parse the input
-      SAXParser saxParser;
-      saxParser = factory.newSAXParser();
+      SAXParser saxParser = factory.newSAXParser();
+      saxParser.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+      saxParser.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
       XMLReader xmlReader = saxParser.getXMLReader();
       xmlReader.setProperty("http://xml.org/sax/properties/lexical-handler",
           this);
