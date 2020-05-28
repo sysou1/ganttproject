@@ -168,22 +168,7 @@ public class GanttXMLOpen implements GPParser {
             aName = attrs.getQName(i);
           }
           if (eName.equals(projectTag)) {
-            if (aName.equals("name")) {
-              myProjectInfo.setName(attrs.getValue(i));
-            } else if (aName.equals("company")) {
-              myProjectInfo.setOrganization(attrs.getValue(i));
-            } else if (aName.equals("webLink")) {
-              myProjectInfo.setWebLink(attrs.getValue(i));
-            }
-            else if (aName.equals("view-date")) {
-              myUIFacade.getScrollingManager().scrollTo(GanttCalendar.parseXMLDate(attrs.getValue(i)).getTime());
-            } else if (aName.equals("view-index")) {
-              viewIndex = Integer.valueOf(attrs.getValue(i)).hashCode();
-            } else if (aName.equals("gantt-divider-location")) {
-              ganttDividerLocation = Integer.parseInt(attrs.getValue(i));
-            } else if (aName.equals("resource-divider-location")) {
-              resourceDividerLocation = Integer.parseInt(attrs.getValue(i));
-            }
+            setProjectInfo(attrs, i, aName);
           } else if (eName.equals(tasksTag)) {
             if ("empty-milestones".equals(aName)) {
               myTaskManager.setZeroMilestones(Boolean.parseBoolean(attrs.getValue(i)));
@@ -211,6 +196,32 @@ public class GanttXMLOpen implements GPParser {
     @Override
     public boolean hasCdata() {
       return hasCdata;
+    }
+  }
+
+  private void setProjectInfo(Attributes attrs, int i, String aName) {
+    switch (aName) {
+      case "name":
+        myProjectInfo.setName(attrs.getValue(i));
+        break;
+      case "company":
+        myProjectInfo.setOrganization(attrs.getValue(i));
+        break;
+      case "webLink":
+        myProjectInfo.setWebLink(attrs.getValue(i));
+        break;
+      case "view-date":
+        myUIFacade.getScrollingManager().scrollTo(GanttCalendar.parseXMLDate(attrs.getValue(i)).getTime());
+        break;
+      case "view-index":
+        viewIndex = Integer.valueOf(attrs.getValue(i)).hashCode();
+        break;
+      case "gantt-divider-location":
+        ganttDividerLocation = Integer.parseInt(attrs.getValue(i));
+        break;
+      case "resource-divider-location":
+        resourceDividerLocation = Integer.parseInt(attrs.getValue(i));
+        break;
     }
   }
 
