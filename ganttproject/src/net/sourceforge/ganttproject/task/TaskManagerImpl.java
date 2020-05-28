@@ -543,27 +543,13 @@ public class TaskManagerImpl implements TaskManager {
         valueBuffer.append(nextChar);
         break;
       case 2:
-        TimeUnit timeUnit = findTimeUnit(valueBuffer.toString());
-        if (timeUnit == null) {
-          throw new DurationParsingException(valueBuffer.toString());
-        }
-        assert currentValue != null;
-        TimeDuration localResult = createLength(timeUnit, currentValue.floatValue());
-        if (currentLength == null) {
-          currentLength = localResult;
-        } else {
-          if (currentLength.getTimeUnit().isConstructedFrom(timeUnit)) {
-            float recalculatedLength = currentLength.getLength(timeUnit);
-            currentLength = createLength(timeUnit, localResult.getValue() + recalculatedLength);
-          } else {
-            throw new DurationParsingException();
-          }
-        }
+        getLengthCase2();
         state = 1;
         currentValue = null;
         valueBuffer.setLength(0);
         valueBuffer.append(nextChar);
         break;
+      default: break;
     }
   }
 
@@ -576,25 +562,30 @@ public class TaskManagerImpl implements TaskManager {
         state = 0;
         break;
       case 2:
-        TimeUnit timeUnit = findTimeUnit(valueBuffer.toString());
-        if (timeUnit == null) {
-          throw new DurationParsingException(valueBuffer.toString());
-        }
-        assert currentValue != null;
-        TimeDuration localResult = createLength(timeUnit, currentValue.floatValue());
-        if (currentLength == null) {
-          currentLength = localResult;
-        } else {
-          if (currentLength.getTimeUnit().isConstructedFrom(timeUnit)) {
-            float recalculatedLength = currentLength.getLength(timeUnit);
-            currentLength = createLength(timeUnit, localResult.getValue() + recalculatedLength);
-          } else {
-            throw new DurationParsingException();
-          }
-        }
+        getLengthCase2();
         state = 0;
         currentValue = null;
         break;
+      default: break;
+    }
+  }
+
+  private void getLengthCase2() {
+    TimeUnit timeUnit = findTimeUnit(valueBuffer.toString());
+    if (timeUnit == null) {
+      throw new DurationParsingException(valueBuffer.toString());
+    }
+    assert currentValue != null;
+    TimeDuration localResult = createLength(timeUnit, currentValue.floatValue());
+    if (currentLength == null) {
+      currentLength = localResult;
+    } else {
+      if (currentLength.getTimeUnit().isConstructedFrom(timeUnit)) {
+        float recalculatedLength = currentLength.getLength(timeUnit);
+        currentLength = createLength(timeUnit, localResult.getValue() + recalculatedLength);
+      } else {
+        throw new DurationParsingException();
+      }
     }
   }
 
@@ -611,6 +602,7 @@ public class TaskManagerImpl implements TaskManager {
       case 2:
         valueBuffer.append(nextChar);
         break;
+      default: break;
     }
   }
 
