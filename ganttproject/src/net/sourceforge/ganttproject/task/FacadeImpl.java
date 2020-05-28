@@ -93,10 +93,7 @@ final class FacadeImpl implements TaskContainmentHierarchyFacade {
     for (Task container = getContainer(second); container != null; container = getContainer(container)) {
       myPathBuffer.add(container);
     }
-    if (myPathBuffer.contains(first)) {
-      return false;
-    }
-    return true;
+    return !myPathBuffer.contains(first);
   }
 
   @Override
