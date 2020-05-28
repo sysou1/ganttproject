@@ -67,6 +67,8 @@ import net.sourceforge.ganttproject.task.event.TaskPropertyEvent;
 import net.sourceforge.ganttproject.task.event.TaskScheduleEvent;
 import net.sourceforge.ganttproject.task.hierarchy.TaskHierarchyManagerImpl;
 
+import java.awt.*;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -356,6 +358,30 @@ public class TaskManagerImpl implements TaskManager {
           task.setStart(cal);
         }
         TimeDuration duration;
+        duration = getTimeDuration();
+        task.setDuration(duration);
+
+        setTaskAttributes(task);
+        registerTask(task);
+        
+        if (myPrevSibling != null && myPrevSibling != getRootTask()) {
+          int position = getTaskHierarchy().getTaskIndex(myPrevSibling) + 1;
+          Task parentTask = getTaskHierarchy().getContainer(myPrevSibling);
+          getTaskHierarchy().move(task, parentTask, position);
+        } else {
+          Task parentTask = myParent == null ? getRootTask() : myParent;
+          getTaskHierarchy().move(task, parentTask);
+        }
+
+        if (isLegacyMilestone) {
+          task.setMilestone(isLegacyMilestone);
+        }
+        fireTaskAdded(task);
+        return task;
+      }
+
+      private TimeDuration getTimeDuration() {
+        TimeDuration duration;
         if (myDuration != null) {
           duration = myDuration;
         } else if (myPrototype != null) {
@@ -365,8 +391,10 @@ public class TaskManagerImpl implements TaskManager {
               ? createLength(getTimeUnitStack().getDefaultTimeUnit(), 1.0f)
                   : createLength(getTimeUnitStack().getDefaultTimeUnit(), myStartDate, myEndDate);
         }
-        task.setDuration(duration);
+        return duration;
+      }
 
+      private void setTaskAttributes(TaskImpl task) {
         if (myColor != null) {
           task.setColor(myColor);
         }
@@ -389,23 +417,6 @@ public class TaskManagerImpl implements TaskManager {
           task.getCost().setCalculated(false);
           task.getCost().setValue(myCost);
         }
-        registerTask(task);
-
-
-        if (myPrevSibling != null && myPrevSibling != getRootTask()) {
-          int position = getTaskHierarchy().getTaskIndex(myPrevSibling) + 1;
-          Task parentTask = getTaskHierarchy().getContainer(myPrevSibling);
-          getTaskHierarchy().move(task, parentTask, position);
-        } else {
-          Task parentTask = myParent == null ? getRootTask() : myParent;
-          getTaskHierarchy().move(task, parentTask);
-        }
-
-        if (isLegacyMilestone) {
-          task.setMilestone(isLegacyMilestone);
-        }
-        fireTaskAdded(task);
-        return task;
       }
     };
   }
