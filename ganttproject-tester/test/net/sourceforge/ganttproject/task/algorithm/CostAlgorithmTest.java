@@ -89,17 +89,17 @@ public class CostAlgorithmTest extends TaskTestCase {
     Task t = createTask();
     t.setDuration(t.getManager().createLength(2));
     t.getAssignmentCollection().addAssignment(joe).setLoad(100f);
-    assertEquals(BigDecimal.valueOf(10), joe.getTotalCost());
+    assertEquals(BigDecimal.valueOf(10F), joe.getTotalCost());
 
     t = createTask();
     t.setDuration(t.getManager().createLength(4));
     t.getAssignmentCollection().addAssignment(joe).setLoad(50f);
-    assertEquals(BigDecimal.valueOf(20), joe.getTotalCost());
+    assertEquals(BigDecimal.valueOf(20F), joe.getTotalCost());
 
     t = createTask();
     t.setDuration(t.getManager().createLength(10));
     t.getAssignmentCollection().addAssignment(joe).setLoad(0f);
-    assertEquals(BigDecimal.valueOf(20), joe.getTotalCost());
+    assertEquals(BigDecimal.valueOf(20F), joe.getTotalCost());
   }
 
 }
