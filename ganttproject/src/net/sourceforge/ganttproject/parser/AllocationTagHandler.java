@@ -91,7 +91,7 @@ public class AllocationTagHandler extends AbstractTagHandler implements  Parsing
         load = Float.parseFloat(loadAsString);
       }
       if (coordinatorAsString != null) {
-        coordinator = Boolean.valueOf(coordinatorAsString).booleanValue();
+        coordinator = Boolean.parseBoolean(coordinatorAsString);
       }
 
     } catch (NumberFormatException e) {

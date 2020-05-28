@@ -313,7 +313,7 @@ public class HumanResource implements CustomPropertyHolder {
     BigDecimal cost = BigDecimal.ZERO;
     for (ResourceAssignment assignment : myAssignments) {
       int taskDuration = assignment.getTask().getDuration().getLength();
-      BigDecimal assignmentCost = new BigDecimal(taskDuration * assignment.getLoad() / 100).multiply(getStandardPayRate());
+      BigDecimal assignmentCost = BigDecimal.valueOf(taskDuration * assignment.getLoad() / 100).multiply(getStandardPayRate());
       cost = cost.add(assignmentCost);
     }
     return cost;

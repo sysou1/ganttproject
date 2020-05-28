@@ -138,7 +138,11 @@ public class GanttXMLOpen implements GPParser {
   }
 
   private class DefaultTagHandler extends AbstractTagHandler {
-    private final Set<String> myTags = ImmutableSet.of("project", "tasks", "description", "notes");
+    private String projectTag = "project";
+    private String tasksTag = "tasks";
+    private String descriptionTag = "description";
+    private String notesTag = "notes";
+    private final Set<String> myTags = ImmutableSet.of(projectTag, tasksTag, descriptionTag, notesTag);
     private boolean hasCdata = false;
 
     DefaultTagHandler() {
@@ -153,8 +157,8 @@ public class GanttXMLOpen implements GPParser {
         eName = qName;
       }
       setTagStarted(myTags.contains(eName));
-      hasCdata = "description".equals(eName) || "notes".equals(eName);
-      if (eName.equals("tasks")) {
+      hasCdata = descriptionTag.equals(eName) || notesTag.equals(eName);
+      if (eName.equals(tasksTag)) {
         myTaskManager.setZeroMilestones(null);
       }
       if (attrs != null) {
@@ -163,7 +167,7 @@ public class GanttXMLOpen implements GPParser {
           if ("".equals(aName)) {
             aName = attrs.getQName(i);
           }
-          if (eName.equals("project")) {
+          if (eName.equals(projectTag)) {
             if (aName.equals("name")) {
               myProjectInfo.setName(attrs.getValue(i));
             } else if (aName.equals("company")) {
@@ -174,13 +178,13 @@ public class GanttXMLOpen implements GPParser {
             else if (aName.equals("view-date")) {
               myUIFacade.getScrollingManager().scrollTo(GanttCalendar.parseXMLDate(attrs.getValue(i)).getTime());
             } else if (aName.equals("view-index")) {
-              viewIndex = new Integer(attrs.getValue(i)).hashCode();
+              viewIndex = Integer.valueOf(attrs.getValue(i)).hashCode();
             } else if (aName.equals("gantt-divider-location")) {
-              ganttDividerLocation = new Integer(attrs.getValue(i)).intValue();
+              ganttDividerLocation = Integer.parseInt(attrs.getValue(i));
             } else if (aName.equals("resource-divider-location")) {
-              resourceDividerLocation = new Integer(attrs.getValue(i)).intValue();
+              resourceDividerLocation = Integer.parseInt(attrs.getValue(i));
             }
-          } else if (eName.equals("tasks")) {
+          } else if (eName.equals(tasksTag)) {
             if ("empty-milestones".equals(aName)) {
               myTaskManager.setZeroMilestones(Boolean.parseBoolean(attrs.getValue(i)));
             }
@@ -194,9 +198,9 @@ public class GanttXMLOpen implements GPParser {
       if (!myTags.contains(qName)) {
         return;
       }
-      if ("description".equals(qName)) {
+      if (descriptionTag.equals(qName)) {
         myProjectInfo.setDescription(getCdata());
-      } else if ("notes".equals(qName)) {
+      } else if (notesTag.equals(qName)) {
         Task currentTask = getContext().peekTask();
         currentTask.setNotes(getCdata());
       }

@@ -173,14 +173,9 @@ public class LoadDistribution {
   public Map<Task, List<Load>> getSeparatedTaskLoads() {
     HashMap<Task, List<Load>> result = new HashMap<>();
     List<Load> taskLoads = getTasksLoads();
-    for (int i = 0; i < taskLoads.size(); i++) {
-      Load nextLoad = taskLoads.get(i);
+    for (Load nextLoad : taskLoads) {
       Task nextTask = nextLoad.refTask;
-      List<Load> partition = result.get(nextTask);
-      if (partition == null) {
-        partition = new ArrayList<>();
-        result.put(nextTask, partition);
-      }
+      List<Load> partition = result.computeIfAbsent(nextTask, k -> new ArrayList<>());
       partition.add(nextLoad);
     }
     return result;

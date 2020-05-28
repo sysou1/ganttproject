@@ -91,7 +91,7 @@ public class XmlParser extends DefaultHandler2 {
   }
 
   @Override
-  public void characters(char buf[], int offset, int len) {
+  public void characters(char[] buf, int offset, int len) {
     if (!myCdataStarted) {
       return;
     }
