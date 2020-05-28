@@ -25,12 +25,12 @@ import net.sourceforge.ganttproject.task.TaskActivity;
  */
 public class LoadDistribution {
   public static class Load {
-    public float load;
+    private float loadValue;
 
     public final Task refTask;
 
-    Load(Date startDate, Date endDate, float load, Task ref) {
-      this.load = load;
+    Load(Date startDate, Date endDate, float loadValue, Task ref) {
+      this.loadValue = loadValue;
       this.refTask = ref;
       this.startDate = startDate;
       this.endDate = endDate;
@@ -38,11 +38,15 @@ public class LoadDistribution {
 
     @Override
     public String toString() {
-      return "start=" + this.startDate + " load=" + this.load + " refTask = " + this.refTask;
+      return "start=" + this.startDate + " load=" + this.loadValue + " refTask = " + this.refTask;
     }
 
     public boolean isResourceUnavailable() {
-      return load == -1;
+      return loadValue == -1;
+    }
+
+    public float getLoadValue() {
+      return loadValue;
     }
 
     public final Date startDate;
@@ -90,15 +94,15 @@ public class LoadDistribution {
     }
   }
 
-  private void processActivity(TaskActivity activity, float load) {
+  private void processActivity(TaskActivity activity, float loadValue) {
     if (activity.getIntensity() == 0) {
       return;
     }
-    addLoad(activity.getStart(), activity.getEnd(), load, myLoads, activity.getOwner());
+    addLoad(activity.getStart(), activity.getEnd(), loadValue, myLoads, activity.getOwner());
   }
 
-  private void addLoad(Date startDate, Date endDate, float load, List<Load> loads, Task t) {
-    Load taskLoad = new Load(startDate, endDate, load, t);
+  private void addLoad(Date startDate, Date endDate, float loadValue, List<Load> loads, Task t) {
+    Load taskLoad = new Load(startDate, endDate, loadValue, t);
 
     myTasksLoads.add(taskLoad);
 
@@ -110,7 +114,7 @@ public class LoadDistribution {
       for (int i = 1; i < loads.size(); i++) {
         Load nextLoad = loads.get(i);
         if (startDate.compareTo(nextLoad.startDate) >= 0) {
-          currentLoad = loads.get(i).load;
+          currentLoad = loads.get(i).getLoadValue();
         }
         if (startDate.compareTo(nextLoad.startDate) > 0) {
           continue;
@@ -133,13 +137,13 @@ public class LoadDistribution {
       for (int i = idxStart; i < loads.size(); i++) {
         Load nextLoad = loads.get(i);
         if (endDate.compareTo(nextLoad.startDate) > 0) {
-          nextLoad.load += load;
+          nextLoad.loadValue += loadValue;
           continue;
         }
         idxEnd = i;
         if (endDate.compareTo(nextLoad.startDate) < 0) {
           Load prevLoad = loads.get(i - 1);
-          loads.add(i, new Load(endDate, null, prevLoad.load - load, null));
+          loads.add(i, new Load(endDate, null, prevLoad.getLoadValue() - loadValue, null));
         }
         break;
       }

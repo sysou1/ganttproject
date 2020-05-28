@@ -118,10 +118,10 @@ class ResourceLoadRenderer extends ChartRendererBase {
     for (int curIndex = 1; curIndex < loads.size(); curIndex++) {
       curLoad = loads.get(curIndex);
       prevLoad = loads.get(curIndex - 1);
-      if (prevLoad.load != 0) {
+      if (prevLoad.getLoadValue() != 0) {
         renderLoads(prevLoad, curLoad, offsets, ypos, suffix);
         suffix = "";
-      } else if (curLoad.load > 0) {
+      } else if (curLoad.getLoadValue() > 0) {
         suffix = ".first";
       }
     }
@@ -143,10 +143,10 @@ class ResourceLoadRenderer extends ChartRendererBase {
     if (prevLoad.isResourceUnavailable()) {
       style = "dayoff";
     } else {
-      suffix += curLoad.load == 0 ? ".last" : "";
-      if (prevLoad.load < 100f) {
+      suffix += curLoad.getLoadValue() == 0 ? ".last" : "";
+      if (prevLoad.getLoadValue() < 100f) {
         style = "load.underload";
-      } else if (prevLoad.load > 100f) {
+      } else if (prevLoad.getLoadValue() > 100f) {
         style = "load.overload";
       } else {
         style = "load.normal";
@@ -154,7 +154,7 @@ class ResourceLoadRenderer extends ChartRendererBase {
       style += suffix;
     }
     nextRect.setStyle(style);
-    nextRect.setModelObject(new ResourceLoad(prevLoad.load));
+    nextRect.setModelObject(new ResourceLoad(prevLoad.getLoadValue()));
     if (!prevLoad.isResourceUnavailable()) {
       createLoadText(nextRect, prevLoad);
     }
@@ -177,16 +177,16 @@ class ResourceLoadRenderer extends ChartRendererBase {
         continue;
       }
       String style;
-      if (nextLoad.load < 100f) {
+      if (nextLoad.getLoadValue() < 100f) {
         style = "load.underload";
-      } else if (nextLoad.load > 100f) {
+      } else if (nextLoad.getLoadValue() > 100f) {
         style = "load.overload";
       } else {
         style = "load.normal";
       }
       style += ".first.last";
       nextRect.setStyle(style);
-      nextRect.setModelObject(new ResourceLoad(nextLoad.load));
+      nextRect.setModelObject(new ResourceLoad(nextLoad.getLoadValue()));
       createLoadText(nextRect, nextLoad);
     }
   }
@@ -196,7 +196,7 @@ class ResourceLoadRenderer extends ChartRendererBase {
     loadLabel.setSelector(new TextSelector() {
       @Override
       public Label[] getLabels(TextMetrics textLengthCalculator) {
-        int loadInt = Math.round(load.load);
+        int loadInt = Math.round(load.getLoadValue());
         String loadStr = loadInt + "%";
         int emsLength = textLengthCalculator.getTextLength(loadStr);
         boolean displayLoad = (loadInt != 100 && emsLength <= rect.getWidth());

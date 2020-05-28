@@ -40,7 +40,7 @@ public class LoadDistributionTest extends TaskTestCase {
     LoadDistribution ld = new LoadDistribution(humanResource);
     List<LoadDistribution.Load> loads = ld.getLoads();
     assertEquals(1, loads.size());
-    assertEquals(0.0f, loads.get(0).load);
+    assertEquals(0.0f, loads.get(0).getLoadValue());
     assertNull(loads.get(0).startDate);
     assertNull(loads.get(0).endDate);
   }
@@ -59,15 +59,15 @@ public class LoadDistributionTest extends TaskTestCase {
     LoadDistribution ld = new LoadDistribution(humanResource);
     List<LoadDistribution.Load> loads = ld.getLoads();
     assertEquals(3, loads.size());
-    assertEquals(0.0f, loads.get(0).load);
+    assertEquals(0.0f, loads.get(0).getLoadValue());
     assertNull(loads.get(0).startDate);
     assertEquals(null, loads.get(0).endDate);
 
-    assertEquals(100.0f, loads.get(1).load);
+    assertEquals(100.0f, loads.get(1).getLoadValue());
     assertEquals(TestSetupHelper.newMonday().getTime(), loads.get(1).startDate);
     assertNull(loads.get(1).endDate);
 
-    assertEquals(0.0f, loads.get(2).load);
+    assertEquals(0.0f, loads.get(2).getLoadValue());
     assertEquals(TestSetupHelper.newTuesday().getTime(), loads.get(2).startDate);
     assertNull(loads.get(2).endDate);
 
@@ -75,7 +75,7 @@ public class LoadDistributionTest extends TaskTestCase {
     assertEquals(1, task2loads.size());
     List<LoadDistribution.Load> taskLoads = task2loads.get(task);
     assertEquals(1, taskLoads.size());
-    assertEquals(100.0f, taskLoads.get(0).load);
+    assertEquals(100.0f, taskLoads.get(0).getLoadValue());
     assertEquals(TestSetupHelper.newMonday().getTime(), taskLoads.get(0).startDate);
     assertEquals(TestSetupHelper.newTuesday().getTime(), taskLoads.get(0).endDate);
   }
