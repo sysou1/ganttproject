@@ -108,6 +108,9 @@ public class ResourceNode extends ResourceTableNode {
         throw new IllegalArgumentException("Rate accepts only numeric values");
       }
       getResource().setStandardPayRate(BigDecimal.valueOf((Double)value));
+      return;
+    default:
+      throw new IllegalArgumentException("Unsupported ResourceDefaultColumn: " + def.getName());
     }
   }
 
@@ -146,6 +149,11 @@ public class ResourceNode extends ResourceTableNode {
       res = rn.getUserObject() != null && rn.getUserObject().equals(this.getUserObject());
     }
     return res;
+  }
+
+  @Override
+  public int hashCode() {
+    return getUserObject().hashCode();
   }
 
   public void removeAllChildren() {
