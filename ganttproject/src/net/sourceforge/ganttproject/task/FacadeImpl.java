@@ -109,7 +109,7 @@ final class FacadeImpl implements TaskContainmentHierarchyFacade {
   @Override
   public int getDepth(Task task) {
     int depth = 0;
-    while (task != taskManager.getMyRoot()) {
+    while (task != taskManager.getRootTask()) {
       task = task.getSupertask();
       depth++;
     }

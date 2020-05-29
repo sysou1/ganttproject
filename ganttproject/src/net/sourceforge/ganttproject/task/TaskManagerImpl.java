@@ -1047,7 +1047,4 @@ public class TaskManagerImpl implements TaskManager {
     return myDependencyGraph;
   }
 
-  public Task getMyRoot(){
-    return myRoot;
-  }
 }
