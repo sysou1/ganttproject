@@ -40,10 +40,13 @@ class MutatorImpl implements TaskMutator {
 
   public final Exception myException = new Exception();
 
+  private TaskManagerImpl myManager;
+
   public MutatorImpl(TaskImpl task) {
     this.task = task;
     myPropertiesEventSender = task.createPropertiesEventSender();
     myProgressEventSender = task.createProgressEventSender();
+    myManager = (TaskManagerImpl) task.getManager();
   }
 
   @Override
@@ -100,7 +103,7 @@ class MutatorImpl implements TaskMutator {
       task.setMyMutator(null);
     }
     if (oneElementNotNull && task.areEventsEnabled()) {
-      task.getMyManager().fireTaskScheduleChanged(task, oldStart, oldEnd);
+      myManager.fireTaskScheduleChanged(task, oldStart, oldEnd);
     }
   }
 
@@ -111,7 +114,7 @@ class MutatorImpl implements TaskMutator {
   public List<TaskActivity> getActivities() {
     if (myActivities == null && (myStartChange != null) || (myDurationChange != null)) {
       myActivities = new ArrayList<>();
-      TaskImpl.recalculateActivities(task.getMyManager().getConfig().getCalendar(), task, myActivities,
+      TaskImpl.recalculateActivities(myManager.getConfig().getCalendar(), task, myActivities,
           getStart().getTime(), task.getEnd().getTime());
     }
     return myActivities;
@@ -340,7 +343,7 @@ class MutatorImpl implements TaskMutator {
       myShiftChange.first().setOldValue(task.getMyStart());
       myShiftChange.second().setOldValue(task.getMyEnd());
     }
-    ShiftTaskTreeAlgorithm shiftAlgorithm = new ShiftTaskTreeAlgorithm(task.getMyManager(), null);
+    ShiftTaskTreeAlgorithm shiftAlgorithm = new ShiftTaskTreeAlgorithm(myManager, null);
     try {
       shiftAlgorithm.run(task, shift, ShiftTaskTreeAlgorithm.DEEP);
     } catch (AlgorithmException e) {

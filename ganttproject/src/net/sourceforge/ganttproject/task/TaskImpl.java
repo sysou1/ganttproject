@@ -919,10 +919,6 @@ public class TaskImpl implements Task {
     this.myMutator = myMutator;
   }
 
-  public TaskManagerImpl getMyManager() {
-    return myManager;
-  }
-
   public GanttCalendar getMyThird() {
     return myThird;
   }
