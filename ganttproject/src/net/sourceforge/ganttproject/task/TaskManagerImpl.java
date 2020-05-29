@@ -527,7 +527,7 @@ public class TaskManagerImpl implements TaskManager {
       if (Character.isDigit(nextChar)) {
         characterIsDigit(nextChar);
       } else if (Character.isWhitespace(nextChar)) {
-        characterIsWhitespace(nextChar);
+        characterIsWhitespace();
       } else {
         characterIsChar(nextChar);
       }
@@ -562,10 +562,8 @@ public class TaskManagerImpl implements TaskManager {
     }
   }
 
-  private void characterIsWhitespace(char nextCar){
+  private void characterIsWhitespace(){
     switch (state) {
-      case 0:
-        break;
       case 1:
         currentValue = Integer.valueOf(valueBuffer.toString());
         state = 0;
