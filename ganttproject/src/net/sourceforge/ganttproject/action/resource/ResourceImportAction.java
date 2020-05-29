@@ -59,7 +59,7 @@ public class ResourceImportAction extends ResourceAction {
       myUiFacade.getUndoManager().undoableEdit(getLocalizedDescription(), new Runnable() {
         @Override
         public void run() {
-          GanttXMLOpen loader = new GanttXMLOpen(null, myTaskManager, myUiFacade);
+          GanttXMLOpen loader = new GanttXMLOpen(null, null, myTaskManager, myUiFacade);
           ResourceTagHandler tagHandler = new ResourceTagHandler(getManager(), myRoleManager,
               getManager().getCustomPropertyManager());
           loader.addParsingListener(tagHandler);

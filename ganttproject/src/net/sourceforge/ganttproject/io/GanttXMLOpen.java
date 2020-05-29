@@ -23,6 +23,7 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import net.sourceforge.ganttproject.GPLogger;
 import net.sourceforge.ganttproject.PrjInfos;
+import net.sourceforge.ganttproject.gui.UIConfiguration;
 import net.sourceforge.ganttproject.gui.UIFacade;
 import net.sourceforge.ganttproject.parser.AbstractTagHandler;
 import net.sourceforge.ganttproject.parser.GPParser;
@@ -65,12 +66,16 @@ public class GanttXMLOpen implements GPParser {
 
   private UIFacade myUIFacade = null;
 
+  private UIConfiguration myUIConfig;
+
   private TagHandler myTimelineTagHandler = new TimelineTagHandler();
 
-  public GanttXMLOpen(PrjInfos info, TaskManager taskManager, UIFacade uiFacade) {
+  public GanttXMLOpen(PrjInfos info, UIConfiguration uiConfig, TaskManager taskManager, UIFacade uiFacade) {
     this(taskManager);
     myProjectInfo = info;
+    myUIConfig = uiConfig;
     this.viewIndex = 0;
+
     this.ganttDividerLocation = 300;
     this.resourceDividerLocation = 300;
     myUIFacade = uiFacade;
@@ -234,7 +239,6 @@ public class GanttXMLOpen implements GPParser {
 
     @Override
     public void parsingStarted() {
-      throw new UnsupportedOperationException();
     }
 
     @Override

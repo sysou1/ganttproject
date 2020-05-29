@@ -194,7 +194,6 @@ public class HumanResourceManager {
   }
 
   public void save(OutputStream target) {
-    throw new UnsupportedOperationException();
   }
 
   public void clear() {

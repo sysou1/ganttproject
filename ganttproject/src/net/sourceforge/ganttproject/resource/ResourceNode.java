@@ -110,7 +110,7 @@ public class ResourceNode extends ResourceTableNode {
       getResource().setStandardPayRate(BigDecimal.valueOf((Double)value));
       return;
     default:
-      throw new IllegalArgumentException("Unsupported ResourceDefaultColumn: " + def.getName());
+      break;
     }
   }
 

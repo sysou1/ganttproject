@@ -25,13 +25,16 @@ public class TestGantXMLOpen extends TestCase {
     @Override
     protected void setUp() throws Exception {
 
+        Color limeColor = new Color(147, 246, 0);
+
         PrjInfos prjInfos = new PrjInfos();
+        UIConfiguration uiConfiguration = new UIConfiguration(limeColor, true);
         TestSetupHelper.TaskManagerBuilder taskManagerBuilder = new TestSetupHelper.TaskManagerBuilder();
         TaskManager taskManager = taskManagerBuilder.build();
         testSetupUI = new TestSetupUI();
         uiFacade = testSetupUI.getUiFacade();
 
-        ganttXMLOpen = new GanttXMLOpen(prjInfos, taskManager, uiFacade);
+        ganttXMLOpen = new GanttXMLOpen(prjInfos, uiConfiguration, taskManager, uiFacade);
     }
 
     public void testLoadInputStream() throws Exception {
