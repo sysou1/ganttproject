@@ -146,10 +146,7 @@ public class GanttXMLOpen implements GPParser {
     @Override
     public void startElement(String namespaceURI, String sName, String qName, Attributes attrs) {
       clearCdata();
-      String eName = sName;
-      if ("".equals(eName)) {
-        eName = qName;
-      }
+      String eName = getName(sName, qName);
       setTagStarted(myTags.contains(eName));
       hasCdata = descriptionTag.equals(eName) || notesTag.equals(eName);
       if (eName.equals(tasksTag)) {
@@ -157,10 +154,7 @@ public class GanttXMLOpen implements GPParser {
       }
       if (attrs != null) {
         for (int i = 0; i < attrs.getLength(); i++) {
-          String aName = attrs.getLocalName(i);
-          if ("".equals(aName)) {
-            aName = attrs.getQName(i);
-          }
+          String aName = getName(attrs.getLocalName(i), attrs.getQName(i));
           if (eName.equals(projectTag)) {
             setProjectInfo(attrs, i, aName);
           } else if (eName.equals(tasksTag)) {
@@ -191,6 +185,14 @@ public class GanttXMLOpen implements GPParser {
     public boolean hasCdata() {
       return hasCdata;
     }
+  }
+
+  private String getName(String localName, String qName2) {
+    String aName = localName;
+    if ("".equals(aName)) {
+      aName = qName2;
+    }
+    return aName;
   }
 
   private void setProjectInfo(Attributes attrs, int i, String aName) {
