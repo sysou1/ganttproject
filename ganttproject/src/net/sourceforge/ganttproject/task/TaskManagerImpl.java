@@ -67,8 +67,6 @@ import net.sourceforge.ganttproject.task.event.TaskPropertyEvent;
 import net.sourceforge.ganttproject.task.event.TaskScheduleEvent;
 import net.sourceforge.ganttproject.task.hierarchy.TaskHierarchyManagerImpl;
 
-import java.awt.*;
-import java.math.BigDecimal;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -92,7 +90,7 @@ public class TaskManagerImpl implements TaskManager {
 
   private final AlgorithmCollection myAlgorithmCollection;
 
-  private final List<TaskListener> myListeners = new ArrayList<TaskListener>();
+  private final List<TaskListener> myListeners = new ArrayList<>();
 
   private AtomicInteger myMaxID = new AtomicInteger(0);
 

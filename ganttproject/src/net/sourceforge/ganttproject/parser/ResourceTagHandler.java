@@ -33,8 +33,6 @@ import net.sourceforge.ganttproject.resource.HumanResource;
 import net.sourceforge.ganttproject.resource.HumanResourceManager;
 import net.sourceforge.ganttproject.roles.Role;
 import net.sourceforge.ganttproject.roles.RoleManager;
-import net.sourceforge.ganttproject.roles.RolePersistentID;
-import net.sourceforge.ganttproject.roles.RoleSet;
 
 import org.xml.sax.Attributes;
 
