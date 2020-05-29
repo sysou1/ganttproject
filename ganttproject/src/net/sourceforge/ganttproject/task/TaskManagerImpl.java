@@ -375,9 +375,9 @@ public class TaskManagerImpl implements TaskManager {
         endDate = myEndDate;
         startDate = myStartDate;
 
-        TimeDuration duration;
-        duration = getTimeDuration();
-        task.setDuration(duration);
+        TimeDuration timeDuration;
+        timeDuration = getTimeDuration();
+        task.setDuration(timeDuration);
 
         color = myColor;
         priority = myPriority;
