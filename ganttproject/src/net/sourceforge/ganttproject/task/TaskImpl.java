@@ -719,7 +719,7 @@ public class TaskImpl implements Task {
     if (duration.getTimeUnit().isConstructedFrom(myLength.getTimeUnit())) {
       return duration.getValue() * duration.getTimeUnit().getAtomCount(myLength.getTimeUnit());
     }
-    throw new RuntimeException("Can't translate duration=" + duration + " into units=" + myLength.getTimeUnit());
+    throw new IllegalArgumentException("Can't translate duration=" + duration + " into units=" + myLength.getTimeUnit());
   }
 
   private void recalculateActivities() {
@@ -842,21 +842,9 @@ public class TaskImpl implements Task {
     return this.critical;
   }
 
-  // TODO: implementation of this method has no correlation with algorithms
-  // recalculating schedules,
-  // doesn't affect subtasks and supertasks. It is necessary to call this
-  // method explicitly from other
-  // parts of code to be sure that constraint fulfills
   @Override
   public void applyThirdDateConstraint() {
-//    if (getThird() != null)
-//      switch (getThirdDateConstraint()) {
-//      case EARLIESTBEGIN:
-//        if (getThird().after(getStart())) {
-//          shift(myManager.getTimeUnitStack().createDuration(getDuration().getTimeUnit(), getStart().getTime(), getThird().getTime()));
-//        }
-//        break;
-//      }
+    throw new UnsupportedOperationException("Method applyThirdDateConstraint() not implemented yet!");
   }
 
   private TaskInfo myTaskInfo;
