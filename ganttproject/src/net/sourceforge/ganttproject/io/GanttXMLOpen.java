@@ -47,8 +47,6 @@ import java.util.Set;
  * Allows to load a gantt file from xml format, using SAX parser
  */
 public class GanttXMLOpen implements GPParser {
-  /** 0-->description of project, 1->note for task */
-  int typeChar = -1;
 
   private final ArrayList<TagHandler> myTagHandlers = new ArrayList<>();
 
@@ -68,16 +66,12 @@ public class GanttXMLOpen implements GPParser {
 
   private UIFacade myUIFacade = null;
 
-  private UIConfiguration myUIConfig;
-
   private TagHandler myTimelineTagHandler = new TimelineTagHandler();
 
-  public GanttXMLOpen(PrjInfos info, UIConfiguration uiConfig, TaskManager taskManager, UIFacade uiFacade) {
+  public GanttXMLOpen(PrjInfos info, TaskManager taskManager, UIFacade uiFacade) {
     this(taskManager);
     myProjectInfo = info;
-    myUIConfig = uiConfig;
     this.viewIndex = 0;
-
     this.ganttDividerLocation = 300;
     this.resourceDividerLocation = 300;
     myUIFacade = uiFacade;
