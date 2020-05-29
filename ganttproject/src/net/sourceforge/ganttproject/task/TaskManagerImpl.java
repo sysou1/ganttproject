@@ -886,14 +886,15 @@ public class TaskManagerImpl implements TaskManager {
         builder = builder.withId(that.getTaskID());
       }
       Task nextImported = createNextImportedTask(importRoot, root, customPropertyMapping, nested[i], builder
-              .withName(that.getName()), that);
+              .withName(that.getName()));
       original2imported.put(nested[i], nextImported);
       importData(nested[i], nextImported, customPropertyMapping, original2imported);
     }
   }
 
   private Task createNextImportedTask(Task importRoot, Task root, Map<CustomPropertyDefinition,
-          CustomPropertyDefinition> customPropertyMapping, Task task, TaskBuilder taskBuilder, GanttTask that) {
+          CustomPropertyDefinition> customPropertyMapping, Task task, TaskBuilder taskBuilder) {
+    GanttTask that = (GanttTask) task;
     Task nextImported = taskBuilder
         .withStartDate(that.getStart().getTime())
         .withDuration(that.getDuration())
