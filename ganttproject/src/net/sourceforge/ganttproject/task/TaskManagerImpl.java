@@ -857,43 +857,53 @@ public class TaskManagerImpl implements TaskManager {
       if (getTask(that.getTaskID()) == null) {
         builder = builder.withId(that.getTaskID());
       }
-      Task nextImported = builder
-          .withName(that.getName())
-          .withStartDate(that.getStart().getTime())
-          .withDuration(that.getDuration())
-          .withColor(that.getColor())
-          .withNotes(that.getNotes())
-          .withWebLink(that.getWebLink())
-          .withPriority(that.getPriority())
-          .withParent(root).build();
+      Task nextImported = createNextImportedTask(importRoot, root, customPropertyMapping, nested[i], builder
+              .withName(that.getName()), that);
+      original2imported.put(nested[i], nextImported);
+      importData(nested[i], nextImported, customPropertyMapping, original2imported);
+    }
+  }
 
-      nextImported.setShape(nested[i].getShape());
-      nextImported.setCompletionPercentage(nested[i].getCompletionPercentage());
-      nextImported.setTaskInfo(nested[i].getTaskInfo());
-      nextImported.setExpand(nested[i].getExpand());
-      nextImported.setMilestone(nested[i].isMilestone());
-      nextImported.getCost().setValue(that.getCost());
-      if (nested[i].getThird() != null) {
-        nextImported.setThirdDate(nested[i].getThird().clone());
-        nextImported.setThirdDateConstraint(nested[i].getThirdDateConstraint());
-      }
+  private Task createNextImportedTask(Task importRoot, Task root, Map<CustomPropertyDefinition,
+          CustomPropertyDefinition> customPropertyMapping, Task task, TaskBuilder taskBuilder, GanttTask that) {
+    Task nextImported = taskBuilder
+        .withStartDate(that.getStart().getTime())
+        .withDuration(that.getDuration())
+        .withColor(that.getColor())
+        .withNotes(that.getNotes())
+        .withWebLink(that.getWebLink())
+        .withPriority(that.getPriority())
+        .withParent(root).build();
 
-      CustomColumnsValues customValues = nested[i].getCustomValues();
-      for (CustomPropertyDefinition thatDef : importRoot.getManager().getCustomPropertyManager().getDefinitions()) {
-        CustomPropertyDefinition thisDef = customPropertyMapping.get(thatDef);
-        Object value = customValues.getValue(thatDef);
-        if (value != null) {
-          try {
-            nextImported.getCustomValues().setValue(thisDef, value);
-          } catch (CustomColumnsException e) {
-            if (!GPLogger.log(e)) {
-              e.printStackTrace(System.err);
-            }
+    setNextImportedAttributes(task, that, nextImported);
+
+    CustomColumnsValues customValues = task.getCustomValues();
+    for (CustomPropertyDefinition thatDef : importRoot.getManager().getCustomPropertyManager().getDefinitions()) {
+      CustomPropertyDefinition thisDef = customPropertyMapping.get(thatDef);
+      Object value = customValues.getValue(thatDef);
+      if (value != null) {
+        try {
+          nextImported.getCustomValues().setValue(thisDef, value);
+        } catch (CustomColumnsException e) {
+          if (!GPLogger.log(e)) {
+            e.printStackTrace(System.err);
           }
         }
       }
-      original2imported.put(nested[i], nextImported);
-      importData(nested[i], nextImported, customPropertyMapping, original2imported);
+    }
+    return nextImported;
+  }
+
+  private void setNextImportedAttributes(Task nested, GanttTask that, Task nextImported) {
+    nextImported.setShape(nested.getShape());
+    nextImported.setCompletionPercentage(nested.getCompletionPercentage());
+    nextImported.setTaskInfo(nested.getTaskInfo());
+    nextImported.setExpand(nested.getExpand());
+    nextImported.setMilestone(nested.isMilestone());
+    nextImported.getCost().setValue(that.getCost());
+    if (nested.getThird() != null) {
+      nextImported.setThirdDate(nested.getThird().clone());
+      nextImported.setThirdDateConstraint(nested.getThirdDateConstraint());
     }
   }
 
