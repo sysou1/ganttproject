@@ -23,7 +23,6 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import net.sourceforge.ganttproject.GPLogger;
 import net.sourceforge.ganttproject.PrjInfos;
-import net.sourceforge.ganttproject.gui.UIConfiguration;
 import net.sourceforge.ganttproject.gui.UIFacade;
 import net.sourceforge.ganttproject.parser.AbstractTagHandler;
 import net.sourceforge.ganttproject.parser.GPParser;
@@ -157,10 +156,8 @@ public class GanttXMLOpen implements GPParser {
           String aName = getName(attrs.getLocalName(i), attrs.getQName(i));
           if (eName.equals(projectTag)) {
             setProjectInfo(attrs, i, aName);
-          } else if (eName.equals(tasksTag)) {
-            if ("empty-milestones".equals(aName)) {
-              myTaskManager.setZeroMilestones(Boolean.parseBoolean(attrs.getValue(i)));
-            }
+          } else if (eName.equals(tasksTag) && eName.equals("empty-milestones")) {
+            myTaskManager.setZeroMilestones(Boolean.parseBoolean(attrs.getValue(i)));
           }
         }
       }
@@ -218,6 +215,8 @@ public class GanttXMLOpen implements GPParser {
       case "resource-divider-location":
         resourceDividerLocation = Integer.parseInt(attrs.getValue(i));
         break;
+      default:
+        throw new IllegalArgumentException("Wrong aName attribute");
     }
   }
 
