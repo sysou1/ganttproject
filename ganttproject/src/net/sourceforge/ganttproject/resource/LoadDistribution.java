@@ -114,7 +114,6 @@ public class LoadDistribution {
     }
     int idxEnd = getIdxEnd(endDate, loadValue, loads, idxStart);
     if (idxEnd == -1) {
-      idxEnd = loads.size();
       loads.add(new Load(endDate, null, 0, t));
     }
   }
