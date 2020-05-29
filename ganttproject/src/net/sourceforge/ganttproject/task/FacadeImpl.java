@@ -136,6 +136,10 @@ final class FacadeImpl implements TaskContainmentHierarchyFacade {
       return 1;
     }
 
+    return compareBufferSize(task1, task2, buffer1, buffer2);
+  }
+
+  private int compareBufferSize(Task task1, Task task2, List<Task> buffer1, List<Task> buffer2) {
     int i = 0;
     Task commonRoot = null;
     while (true) {
