@@ -48,7 +48,7 @@ public class OverwritingMerger implements HumanResourceMerger {
   private void merge(HumanResource mergeFrom, HumanResource mergeTo) {
     if (mergeFrom.getDaysOff() != null) {
       for (int i = 0; i < mergeFrom.getDaysOff().size(); i++) {
-        mergeTo.addDaysOff(GanttDaysOff.create((GanttDaysOff) mergeFrom.getDaysOff().get(i)));
+        mergeTo.addDaysOff(GanttDaysOff.create(mergeFrom.getDaysOff().get(i)));
       }
     }
     mergeTo.setName(mergeFrom.getName());
