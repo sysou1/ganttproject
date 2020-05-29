@@ -373,10 +373,11 @@ public class TaskImpl implements Task {
         }
       }
       if (!allMilestones) {
-        GPLogger.getLogger(Task.class).warning(String.format(
-            "This is probably a bug. Task #%d (%s) has end date=%s equal to start date." +
-            "It could be possible if all child tasks were milestones, however they are not. Child tasks: %s",
-            getTaskID(), getName(), modelEnd, Arrays.asList(deepNestedTasks)));
+        String errorMsg = String.format(
+                "This is probably a bug. Task #%d (%s) has end date=%s equal to start date." +
+                        "It could be possible if all child tasks were milestones, however they are not. Child tasks: %s",
+                getTaskID(), getName(), modelEnd, Arrays.asList(deepNestedTasks));
+        GPLogger.getLogger(Task.class).warning(errorMsg);
       }
       return modelEnd;
     }
