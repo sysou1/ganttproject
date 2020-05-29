@@ -67,6 +67,8 @@ import net.sourceforge.ganttproject.task.event.TaskPropertyEvent;
 import net.sourceforge.ganttproject.task.event.TaskScheduleEvent;
 import net.sourceforge.ganttproject.task.hierarchy.TaskHierarchyManagerImpl;
 
+import java.awt.*;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -330,6 +332,18 @@ public class TaskManagerImpl implements TaskManager {
     return (GanttTask) newTaskBuilder().withId(id).build();
   }
 
+  Color color;
+  Task.Priority priority;
+  Boolean canBeExpanded;
+  String notes;
+  String webLink;
+  Integer completion;
+  BigDecimal cost;
+  TimeDuration duration;
+  Task prototype;
+  Date endDate;
+  Date startDate;
+
   @Override
   public TaskBuilder newTaskBuilder() {
     return new TaskBuilder() {
@@ -355,13 +369,27 @@ public class TaskManagerImpl implements TaskManager {
           GanttCalendar cal = CalendarFactory.createGanttCalendar(myStartDate);
           task.setStart(cal);
         }
+
+        duration = myDuration;
+        prototype = myPrototype;
+        endDate = myEndDate;
+        startDate = myStartDate;
+
         TimeDuration duration;
         duration = getTimeDuration();
         task.setDuration(duration);
 
+        color = myColor;
+        priority = myPriority;
+        canBeExpanded = isExpanded;
+        notes = myNotes;
+        webLink = myWebLink;
+        cost = myCost;
+        completion = myCompletion;
+
         setTaskAttributes(task);
         registerTask(task);
-        
+
         if (myPrevSibling != null && myPrevSibling != getRootTask()) {
           int position = getTaskHierarchy().getTaskIndex(myPrevSibling) + 1;
           Task parentTask = getTaskHierarchy().getContainer(myPrevSibling);
@@ -377,46 +405,46 @@ public class TaskManagerImpl implements TaskManager {
         fireTaskAdded(task);
         return task;
       }
-
-      private TimeDuration getTimeDuration() {
-        TimeDuration duration;
-        if (myDuration != null) {
-          duration = myDuration;
-        } else if (myPrototype != null) {
-          duration = myPrototype.getDuration();
-        } else {
-          duration = (myEndDate == null)
-              ? createLength(getTimeUnitStack().getDefaultTimeUnit(), 1.0f)
-                  : createLength(getTimeUnitStack().getDefaultTimeUnit(), myStartDate, myEndDate);
-        }
-        return duration;
-      }
-
-      private void setTaskAttributes(TaskImpl task) {
-        if (myColor != null) {
-          task.setColor(myColor);
-        }
-        if (myPriority != null) {
-          task.setPriority(myPriority);
-        }
-        if (isExpanded != null) {
-          task.setExpand(isExpanded);
-        }
-        if (myNotes != null) {
-          task.setNotes(myNotes);
-        }
-        if (myWebLink != null) {
-          task.setWebLink(myWebLink);
-        }
-        if (myCompletion != null) {
-          task.setCompletionPercentage(myCompletion);
-        }
-        if (myCost != null) {
-          task.getCost().setCalculated(false);
-          task.getCost().setValue(myCost);
-        }
-      }
     };
+  }
+
+  void setTaskAttributes(TaskImpl task){
+    if (color != null) {
+      task.setColor(color);
+    }
+    if (priority != null) {
+      task.setPriority(priority);
+    }
+    if (canBeExpanded != null) {
+      task.setExpand(canBeExpanded);
+    }
+    if (notes != null) {
+      task.setNotes(notes);
+    }
+    if (webLink != null) {
+      task.setWebLink(webLink);
+    }
+    if (completion != null) {
+      task.setCompletionPercentage(completion);
+    }
+    if (cost != null) {
+      task.getCost().setCalculated(false);
+      task.getCost().setValue(cost);
+    }
+  }
+
+  TimeDuration getTimeDuration(){
+    TimeDuration newDuration;
+    if (duration != null) {
+      newDuration = duration;
+    } else if (prototype != null) {
+      newDuration = prototype.getDuration();
+    } else {
+      newDuration = (endDate == null)
+              ? createLength(getTimeUnitStack().getDefaultTimeUnit(), 1.0f)
+              : createLength(getTimeUnitStack().getDefaultTimeUnit(), startDate, endDate);
+    }
+    return newDuration;
   }
 
   protected TimeUnitStack getTimeUnitStack() {
