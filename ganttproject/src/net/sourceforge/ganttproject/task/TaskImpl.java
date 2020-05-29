@@ -316,7 +316,8 @@ public class TaskImpl implements Task {
         }
 
         @Override
-        public void write(){
+        public void write() throws IOException {
+          throw new UnsupportedOperationException();
         }
       });
     }
@@ -844,6 +845,7 @@ public class TaskImpl implements Task {
 
   @Override
   public void applyThirdDateConstraint() {
+    throw new UnsupportedOperationException("Method applyThirdDateConstraint() not implemented yet!");
   }
 
   private TaskInfo myTaskInfo;

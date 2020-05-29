@@ -59,6 +59,7 @@ public class AssignmentNode extends ResourceTableNode {
 
   @Override
   public void setCustomField(CustomPropertyDefinition def, Object val) {
+    throw new UnsupportedOperationException();
   }
 
   @Override
