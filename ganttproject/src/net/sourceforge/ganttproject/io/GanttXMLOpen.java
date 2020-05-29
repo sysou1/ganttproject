@@ -216,7 +216,7 @@ public class GanttXMLOpen implements GPParser {
         resourceDividerLocation = Integer.parseInt(attrs.getValue(i));
         break;
       default:
-        throw new IllegalArgumentException("Wrong aName attribute");
+        break;
     }
   }
 
