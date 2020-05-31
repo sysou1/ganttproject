@@ -83,11 +83,6 @@ public class GanttXMLOpen implements GPParser {
 
   @Override
   public boolean load(InputStream inStream) throws IOException {
-    return doLoad(inStream);
-  }
-
-  public boolean doLoad(InputStream inStream) throws IOException {
-    // Use an instance of ourselves as the SAX event handler
     XmlParser parser = new XmlParser(myTagHandlers, myListeners);
     parser.parse(inStream);
     myUIFacade.setViewIndex(viewIndex);
@@ -96,7 +91,6 @@ public class GanttXMLOpen implements GPParser {
       myUIFacade.setResourceDividerLocation(resourceDividerLocation);
     }
     return true;
-
   }
 
   public boolean load(File file) {
