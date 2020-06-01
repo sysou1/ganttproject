@@ -166,8 +166,7 @@ public class ResourceTagHandler extends AbstractTagHandler implements ParsingLis
   }
 
   private Role findRole(String persistentIDasString) {
-    FindRoleClass findRoleClass = new FindRoleClass(myRoleManager);
-    return findRoleClass.findRole(persistentIDasString);
+    return findRole(myRoleManager ,persistentIDasString);
   }
 
   @Override

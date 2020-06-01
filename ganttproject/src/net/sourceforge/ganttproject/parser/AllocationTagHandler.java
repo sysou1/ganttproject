@@ -128,8 +128,7 @@ public class AllocationTagHandler extends AbstractTagHandler implements  Parsing
   }
 
   private Role findRole(String persistentIDasString) {
-    FindRoleClass findRoleClass = new FindRoleClass(myRoleManager);
-    return findRoleClass.findRole(persistentIDasString);
+    return findRole(myRoleManager  ,persistentIDasString);
   }
 
   @Override

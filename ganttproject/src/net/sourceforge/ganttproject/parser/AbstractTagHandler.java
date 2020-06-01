@@ -18,6 +18,10 @@ along with GanttProject.  If not, see <http://www.gnu.org/licenses/>.
 */
 package net.sourceforge.ganttproject.parser;
 
+import net.sourceforge.ganttproject.roles.Role;
+import net.sourceforge.ganttproject.roles.RoleManager;
+import net.sourceforge.ganttproject.roles.RolePersistentID;
+import net.sourceforge.ganttproject.roles.RoleSet;
 import org.xml.sax.Attributes;
 
 import com.google.common.base.Objects;
@@ -103,6 +107,27 @@ public abstract class AbstractTagHandler implements TagHandler {
   }
 
   protected void onEndElement() {
+  }
+
+  public Role findRole(RoleManager myRoleManager, String persistentIDasString) {
+    RolePersistentID persistentID = new RolePersistentID(persistentIDasString);
+    String rolesetName = persistentID.getRoleSetID();
+    int roleID = persistentID.getRoleID();
+    RoleSet roleSet;
+    if (rolesetName == null) {
+      roleSet = myRoleManager.getProjectRoleSet();
+      if (roleSet.findRole(roleID) == null) {
+        if (roleID <= 10 && roleID > 2) {
+          roleSet = myRoleManager.getRoleSet(RoleSet.SOFTWARE_DEVELOPMENT);
+          roleSet.setEnabled(true);
+        } else if (roleID <= 2) {
+          roleSet = myRoleManager.getRoleSet(RoleSet.DEFAULT);
+        }
+      }
+    } else {
+      roleSet = myRoleManager.getRoleSet(rolesetName);
+    }
+    return roleSet.findRole(roleID);
   }
 
 }
