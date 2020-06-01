@@ -19,7 +19,7 @@ along with GanttProject.  If not, see <http://www.gnu.org/licenses/>.
 package net.sourceforge.ganttproject.parser;
 
 public interface ParsingListener {
-  public void parsingStarted();
+  public void startParsing();
 
-  public void parsingFinished();
+  public void finishParsing();
 }

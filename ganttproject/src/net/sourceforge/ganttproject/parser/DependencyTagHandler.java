@@ -52,11 +52,11 @@ public class DependencyTagHandler extends AbstractTagHandler implements ParsingL
   }
 
   @Override
-  public void parsingStarted() {
+  public void startParsing() {
   }
 
   @Override
-  public void parsingFinished() {
+  public void finishParsing() {
     for (int i = 0; i < getDependencies().size(); i++) {
       GanttDependStructure ds = getDependencies().get(i);
       Task dependee = myTaskManager.getTask(ds.taskID);

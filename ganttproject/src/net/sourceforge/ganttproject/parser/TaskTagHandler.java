@@ -202,11 +202,11 @@ public class TaskTagHandler extends AbstractTagHandler implements ParsingListene
   }
 
   @Override
-  public void parsingStarted() {
+  public void startParsing() {
   }
 
   @Override
-  public void parsingFinished() {
+  public void finishParsing() {
     List<Task> tasksBottomUp = Lists.reverse(myManager.getTaskHierarchy().breadthFirstSearch(null, false));
 
     for (Task t : tasksBottomUp) {

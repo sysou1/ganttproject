@@ -171,12 +171,12 @@ public class ResourceTagHandler extends AbstractTagHandler implements ParsingLis
   }
 
   @Override
-  public void parsingStarted() {
+  public void startParsing() {
     throw new UnsupportedOperationException();
   }
 
   @Override
-  public void parsingFinished() {
+  public void finishParsing() {
     for (Iterator<Entry<HumanResource, String>> lateBindingEntries = myLateResource2roleBinding.entrySet().iterator(); lateBindingEntries.hasNext();) {
       Map.Entry<HumanResource, String> nextEntry = lateBindingEntries.next();
       String persistentID = nextEntry.getValue();

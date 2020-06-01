@@ -227,12 +227,12 @@ public class GanttXMLOpen implements GPParser {
     }
 
     @Override
-    public void parsingStarted() {
+    public void startParsing() {
       throw new UnsupportedOperationException();
     }
 
     @Override
-    public void parsingFinished() {
+    public void finishParsing() {
       myUIFacade.getCurrentTaskView().getTimelineTasks().clear();
       for (Integer id : myIds) {
         Task t = myTaskManager.getTask(id);

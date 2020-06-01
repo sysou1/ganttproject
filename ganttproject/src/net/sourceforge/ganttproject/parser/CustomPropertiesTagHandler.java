@@ -59,18 +59,18 @@ public class CustomPropertiesTagHandler extends AbstractTagHandler implements Pa
   }
 
   /**
-   * @see net.sourceforge.ganttproject.parser.ParsingListener#parsingStarted()
+   * @see net.sourceforge.ganttproject.parser.ParsingListener#startParsing()
    */
   @Override
-  public void parsingStarted() {
+  public void startParsing() {
     // nothing to do.
   }
 
   /**
-   * @see net.sourceforge.ganttproject.parser.ParsingListener#parsingFinished()
+   * @see net.sourceforge.ganttproject.parser.ParsingListener#finishParsing()
    */
   @Override
-  public void parsingFinished() {
+  public void finishParsing() {
     Iterator<CustomPropertiesStructure> it = this.listStructure.iterator();
 
     while (it.hasNext()) {

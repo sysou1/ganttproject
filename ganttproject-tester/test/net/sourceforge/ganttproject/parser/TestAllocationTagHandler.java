@@ -57,7 +57,7 @@ public class TestAllocationTagHandler extends TestCase {
 
         boolean result = al.onStartElement(createAttr());
 
-        al.parsingFinished();
+        al.finishParsing();
 
         assertTrue(result);
     }

@@ -217,7 +217,7 @@ public class TestResourceTagHandler extends TestCase {
         resourceTagHandler.startElement(namespaceURI, sName, qName, attributes);
         assertTrue(resourceTagHandler.isTagStarted());
 
-        resourceTagHandler.parsingFinished();
+        resourceTagHandler.finishParsing();
         assertNotNull(humanResourceManager.getResources().get(0).getRole());
     }
     

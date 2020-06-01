@@ -88,12 +88,12 @@ public class TaskDisplayColumnsTagHandler extends AbstractTagHandler {
   public static ParsingListener createTaskDisplayColumnsWrapper(final ColumnList visibleFields, final TaskDisplayColumnsTagHandler pilsenHandler, final TaskDisplayColumnsTagHandler legacyHandler) {
     return new ParsingListener() {
       @Override
-      public void parsingStarted() {
+      public void startParsing() {
         visibleFields.clear();
       }
 
       @Override
-      public void parsingFinished() {
+      public void finishParsing() {
         List<Column> buffer = pilsenHandler.myBuffer.isEmpty() ? legacyHandler.myBuffer : pilsenHandler.myBuffer;
         visibleFields.importData(ColumnList.Immutable.fromList(buffer));
       }
@@ -104,12 +104,12 @@ public class TaskDisplayColumnsTagHandler extends AbstractTagHandler {
   public static ParsingListener createTaskDisplayColumnsWrapper(final ColumnList visibleFields, final TaskDisplayColumnsTagHandler displayColumnsTagHandler) {
     return new ParsingListener() {
       @Override
-      public void parsingStarted() {
+      public void startParsing() {
         visibleFields.clear();
       }
 
       @Override
-      public void parsingFinished() {
+      public void finishParsing() {
         visibleFields.importData(ColumnList.Immutable.fromList(displayColumnsTagHandler.myBuffer));
       }
     };

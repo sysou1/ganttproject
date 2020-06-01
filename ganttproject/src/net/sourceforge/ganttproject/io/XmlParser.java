@@ -54,7 +54,7 @@ public class XmlParser extends DefaultHandler2 {
   @Override
   public void endDocument() {
     for (ParsingListener l : myListeners) {
-      l.parsingFinished();
+      l.finishParsing();
     }
   }
 
