@@ -102,7 +102,7 @@ public class TestResourceTagHandler extends TestCase {
 
         createElements();
         HumanResource humanResource = new HumanResource("Foo", 1, humanResourceManager);
-        humanResourceManager.add(humanResource);
+        humanResourceManager.addHumanResource(humanResource);
         CustomPropertyDefinition def1 = customPropertyManager.createDefinition("1", "1", "1", "1");
         customPropertyManager.createDefinition("2", "2", "2", "2");
         ResourceTagHandler resourceTagHandler = new ResourceTagHandler(humanResourceManager, roleManager, customPropertyManager);

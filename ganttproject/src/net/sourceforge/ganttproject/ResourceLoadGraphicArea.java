@@ -195,9 +195,9 @@ public class ResourceLoadGraphicArea extends ChartComponentBase implements Resou
         ResourceChartSelection resourceChartSelection = (ResourceChartSelection) selection;
         for (HumanResource res : resourceChartSelection.myClipboardContents.getResources()) {
           if (resourceChartSelection.myClipboardContents.isCut()) {
-            getResourceManager().add(res);
+            getResourceManager().addHumanResource(res);
           } else {
-            getResourceManager().add(res.unpluggedClone());
+            getResourceManager().addHumanResource(res.unpluggedClone());
           }
         }
       }

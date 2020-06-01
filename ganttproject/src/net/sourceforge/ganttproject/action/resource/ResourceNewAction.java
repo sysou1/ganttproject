@@ -70,7 +70,7 @@ public class ResourceNewAction extends ResourceAction {
       myUIFacade.getUndoManager().undoableEdit(getLocalizedDescription(), new Runnable() {
         @Override
         public void run() {
-          getManager().add(resource);
+          getManager().addHumanResource(resource);
           myUIFacade.getResourceTree().setSelected(resource, true);
         }
       });

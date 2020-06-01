@@ -115,7 +115,7 @@ public class HumanResource implements CustomPropertyHolder {
 
   public void delete() {
     removeAllAssignments();
-    myManager.remove(this);
+    myManager.removeHumanResource(this);
   }
 
   public void setId(int id) {

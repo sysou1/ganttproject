@@ -360,7 +360,7 @@ class ProjectFileImporter {
       if (standardRate != null && standardRate.getAmount() != 0.0 && r.getStandardRateUnits() == TimeUnit.DAYS) {
         nativeResource.setStandardPayRate(new BigDecimal(standardRate.getAmount()));
       }
-      myNativeProject.getHumanResourceManager().add(nativeResource);
+      myNativeProject.getHumanResourceManager().addHumanResource(nativeResource);
       importDaysOff(r, nativeResource);
       importCustomProperties(r, nativeResource);
       foreignId2humanResource.put(r.getUniqueID(), nativeResource);

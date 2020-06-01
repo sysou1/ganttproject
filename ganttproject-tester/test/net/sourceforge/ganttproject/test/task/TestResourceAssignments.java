@@ -149,8 +149,8 @@ public class TestResourceAssignments extends TestCase {
         super.setUp();
         myHumanResourceManager = new HumanResourceManager(RoleManager.Access
                 .getInstance().getDefaultRole(), null);
-        getResourceManager().create("test resource#1", 1);
-        getResourceManager().create("test resource#2", 2);
+        getResourceManager().createHumanResource("test resource#1", 1);
+        getResourceManager().createHumanResource("test resource#2", 2);
         myTaskManager = newTaskManager();
     }
 

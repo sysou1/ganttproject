@@ -18,7 +18,6 @@ along with GanttProject.  If not, see <http://www.gnu.org/licenses/>.
  */
 package net.sourceforge.ganttproject;
 
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -36,7 +35,6 @@ import net.sourceforge.ganttproject.resource.ResourceTableNode;
 import net.sourceforge.ganttproject.task.ResourceAssignment;
 import net.sourceforge.ganttproject.task.Task;
 import net.sourceforge.ganttproject.task.TaskManager;
-import net.sourceforge.ganttproject.task.event.TaskHierarchyEvent;
 import net.sourceforge.ganttproject.task.event.TaskListenerAdapter;
 import net.sourceforge.ganttproject.task.event.TaskScheduleEvent;
 
@@ -188,7 +186,7 @@ public class ResourceTreeTableModel extends DefaultTreeTableModel {
 
   /** Move Up the selected resource */
   public boolean moveUp(HumanResource resource) {
-    myResourceManager.up(resource);
+    myResourceManager.moveUp(resource);
     ResourceNode rn = getNodeForResource(resource);
     int index = TreeUtil.getPrevSibling(root, rn);
     if (index == -1) {
@@ -200,7 +198,7 @@ public class ResourceTreeTableModel extends DefaultTreeTableModel {
   }
 
   public boolean moveDown(HumanResource resource) {
-    myResourceManager.down(resource);
+    myResourceManager.moveDown(resource);
     ResourceNode rn = getNodeForResource(resource);
     int index = TreeUtil.getNextSibling(root, rn);
     if (index == -1) {

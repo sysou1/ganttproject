@@ -1,13 +1,10 @@
 package net.sourceforge.ganttproject.parser;
 
 import junit.framework.TestCase;
-import net.sourceforge.ganttproject.GanttProjectImpl;
 import net.sourceforge.ganttproject.GanttTask;
 import net.sourceforge.ganttproject.TestSetupHelper;
-import net.sourceforge.ganttproject.language.GanttLanguage;
 import net.sourceforge.ganttproject.resource.HumanResource;
 import net.sourceforge.ganttproject.resource.HumanResourceManager;
-import net.sourceforge.ganttproject.roles.RoleManager;
 import net.sourceforge.ganttproject.roles.RoleManagerImpl;
 import net.sourceforge.ganttproject.task.*;
 import org.xml.sax.Attributes;
@@ -51,7 +48,7 @@ public class TestAllocationTagHandler extends TestCase {
         HumanResourceManager humanResourceManager = getHumanResourceManager();
 
         HumanResource joe = new HumanResource("Joe", 1, getHumanResourceManager());
-        humanResourceManager.add(joe);
+        humanResourceManager.addHumanResource(joe);
 
         Task task = new GanttTask("task1", newFriday(),10, (TaskManagerImpl) getTaskManager(), 1);
         getTaskManager().registerTask(task);

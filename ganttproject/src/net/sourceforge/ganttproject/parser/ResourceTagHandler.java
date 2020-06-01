@@ -141,9 +141,9 @@ public class ResourceTagHandler extends AbstractTagHandler implements ParsingLis
       if (id == null) {
         hr = getResourceManager().newHumanResource();
         hr.setName(atts.getValue("name"));
-        getResourceManager().add(hr);
+        getResourceManager().addHumanResource(hr);
       } else {
-        hr = getResourceManager().create(atts.getValue("name"), Integer.parseInt(id));
+        hr = getResourceManager().createHumanResource(atts.getValue("name"), Integer.parseInt(id));
       }
       myCurrentResource = hr;
     } catch (NumberFormatException e) {

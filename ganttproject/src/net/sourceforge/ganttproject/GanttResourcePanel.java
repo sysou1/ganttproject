@@ -359,7 +359,7 @@ public class GanttResourcePanel extends TreeTableContainer<HumanResource, Resour
       if (node instanceof ResourceNode) {
         HumanResource res = (HumanResource) node.getUserObject();
         if (cut) {
-          this.appli.getHumanResourceManager().remove(res, this.appli.getUndoManager());
+          this.appli.getHumanResourceManager().removeHumanResourceWithUndoManager(res, this.appli.getUndoManager());
         }
         clipboardContents.addResource(res);
       }

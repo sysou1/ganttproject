@@ -32,7 +32,7 @@ public class TestResourceTotalLoad extends TaskTestCase {
 
     assertEquals(0.0, joe.getTotalLoad());
 
-    builder.getResourceManager().add(joe);
+    builder.getResourceManager().addHumanResource(joe);
 
     Task t = createTask();
     t.setDuration(t.getManager().createLength(2));

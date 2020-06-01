@@ -87,7 +87,7 @@ public class GPTransferable implements Transferable {
     processor.pasteAsChild(taskMgr.getRootTask(), myClipboardContents);
 
     for (HumanResource res : myClipboardContents.getResources()) {
-      bufferProject.getHumanResourceManager().add(res.unpluggedClone());
+      bufferProject.getHumanResourceManager().addHumanResource(res.unpluggedClone());
     }
     try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
       GanttXMLSaver saver = new GanttXMLSaver(bufferProject);

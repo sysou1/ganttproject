@@ -35,7 +35,7 @@ public class LoadDistributionTest extends TaskTestCase {
   public void testEmptyLoadDistribution() {
     HumanResourceManager resourceManager = new HumanResourceManager(null, new CustomColumnsManager());
     HumanResource humanResource = new HumanResource("Foo", 1, resourceManager);
-    resourceManager.add(humanResource);
+    resourceManager.addHumanResource(humanResource);
 
     LoadDistribution ld = new LoadDistribution(humanResource);
     List<LoadDistribution.Load> loads = ld.getLoads();
@@ -48,7 +48,7 @@ public class LoadDistributionTest extends TaskTestCase {
   public void testSingleTaskNoWeekendDistribution() {
     HumanResourceManager resourceManager = new HumanResourceManager(null, new CustomColumnsManager());
     HumanResource humanResource = new HumanResource("Foo", 1, resourceManager);
-    resourceManager.add(humanResource);
+    resourceManager.addHumanResource(humanResource);
 
     Task task = createTask(TestSetupHelper.newMonday(), 1);
     ResourceAssignmentMutator mutableAssignments = task.getAssignmentCollection().createMutator();

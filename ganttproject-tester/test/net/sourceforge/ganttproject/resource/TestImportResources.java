@@ -11,12 +11,12 @@ public class TestImportResources extends TestCase {
         mergeOption.setValue(MergeResourcesOption.BY_NAME);
 
         HumanResourceManager mergeTo = new HumanResourceManager(null, new CustomColumnsManager());
-        mergeTo.add(new HumanResource("joe", 1, mergeTo));
-        mergeTo.add(new HumanResource("john", 2, mergeTo));
+        mergeTo.addHumanResource(new HumanResource("joe", 1, mergeTo));
+        mergeTo.addHumanResource(new HumanResource("john", 2, mergeTo));
 
         HumanResourceManager mergeFrom = new HumanResourceManager(null, new CustomColumnsManager());
-        mergeFrom.add(new HumanResource("jack", 1, mergeFrom));
-        mergeFrom.add(new HumanResource("joe", 2, mergeFrom));
+        mergeFrom.addHumanResource(new HumanResource("jack", 1, mergeFrom));
+        mergeFrom.addHumanResource(new HumanResource("joe", 2, mergeFrom));
 
         mergeTo.importData(mergeFrom, new OverwritingMerger(mergeOption));
 
@@ -31,12 +31,12 @@ public class TestImportResources extends TestCase {
         mergeOption.setValue(MergeResourcesOption.BY_ID);
 
         HumanResourceManager mergeTo = new HumanResourceManager(null, new CustomColumnsManager());
-        mergeTo.add(new HumanResource("joe", 1, mergeTo));
-        mergeTo.add(new HumanResource("john", 2, mergeTo));
+        mergeTo.addHumanResource(new HumanResource("joe", 1, mergeTo));
+        mergeTo.addHumanResource(new HumanResource("john", 2, mergeTo));
 
         HumanResourceManager mergeFrom = new HumanResourceManager(null, new CustomColumnsManager());
-        mergeFrom.add(new HumanResource("jack", 1, mergeFrom));
-        mergeFrom.add(new HumanResource("joe", 3, mergeFrom));
+        mergeFrom.addHumanResource(new HumanResource("jack", 1, mergeFrom));
+        mergeFrom.addHumanResource(new HumanResource("joe", 3, mergeFrom));
 
         mergeTo.importData(mergeFrom, new OverwritingMerger(mergeOption));
 

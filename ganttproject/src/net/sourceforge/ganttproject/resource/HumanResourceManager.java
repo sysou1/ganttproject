@@ -133,20 +133,20 @@ public class HumanResourceManager {
         result.setPhone(myPhone);
         result.setMail(myEmail);
         result.setStandardPayRate(myStandardRate);
-        add(result);
+        addHumanResource(result);
         return result;
       }
 
     };
   }
-  public HumanResource create(String name, int i) {
+  public HumanResource createHumanResource(String name, int i) {
     HumanResource hr = new HumanResource(name, i, this);
     hr.setRole(myDefaultRole);
-    add(hr);
+    addHumanResource(hr);
     return hr;
   }
 
-  public void add(HumanResource resource) {
+  public void addHumanResource(HumanResource resource) {
     if (resource.getId() == -1) {
       resource.setId(nextFreeId);
     }
@@ -177,24 +177,19 @@ public class HumanResourceManager {
     return resources.toArray(new HumanResource[resources.size()]);
   }
 
-  public void remove(HumanResource resource) {
+  public void removeHumanResource(HumanResource resource) {
     fireResourcesRemoved(new HumanResource[] { resource });
     resources.remove(resource);
   }
 
-  public void remove(HumanResource resource, GPUndoManager myUndoManager) {
-    final HumanResource res = resource;
+  public void removeHumanResourceWithUndoManager(HumanResource resource, GPUndoManager myUndoManager) {
     myUndoManager.undoableEdit("Delete Human OK", new Runnable() {
       @Override
       public void run() {
-        fireResourcesRemoved(new HumanResource[] { res });
-        resources.remove(res);
+        fireResourcesRemoved(new HumanResource[] { resource });
+        resources.remove(resource);
       }
     });
-  }
-
-  public void save(OutputStream target) {
-    throw new UnsupportedOperationException();
   }
 
   public void clear() {
@@ -246,7 +241,7 @@ public class HumanResourceManager {
   }
 
   /** Move up the resource number index */
-  public void up(HumanResource hr) {
+  public void moveUp(HumanResource hr) {
     int index = resources.indexOf(hr);
     assert index >= 0;
     resources.remove(index);
@@ -255,7 +250,7 @@ public class HumanResourceManager {
   }
 
   /** Move down the resource number index */
-  public void down(HumanResource hr) {
+  public void moveDown(HumanResource hr) {
     int index = resources.indexOf(hr);
     assert index >= 0;
     resources.remove(index);
@@ -279,7 +274,7 @@ public class HumanResourceManager {
       foreign2native.put(foreignHR, nativeHR);
     }
     for (HumanResource created : createdResources) {
-      add(created);
+      addHumanResource(created);
     }
     merger.merge(foreign2native);
     return foreign2native;

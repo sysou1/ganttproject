@@ -61,8 +61,8 @@ public class CostAlgorithmTest extends TaskTestCase {
     HumanResource jane = new HumanResource("Jane", 2, builder.getResourceManager());
     jane.setStandardPayRate(BigDecimal.valueOf(10));
 
-    builder.getResourceManager().add(joe);
-    builder.getResourceManager().add(jane);
+    builder.getResourceManager().addHumanResource(joe);
+    builder.getResourceManager().addHumanResource(jane);
 
     Task t = createTask();
     t.setDuration(t.getManager().createLength(2));
@@ -84,7 +84,7 @@ public class CostAlgorithmTest extends TaskTestCase {
 
     assertEquals(BigDecimal.ZERO, joe.getTotalCost());
 
-    builder.getResourceManager().add(joe);
+    builder.getResourceManager().addHumanResource(joe);
 
     Task t = createTask();
     t.setDuration(t.getManager().createLength(2));

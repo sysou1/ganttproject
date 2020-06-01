@@ -48,9 +48,9 @@ public class GPCsvExportTest extends TaskTestCase {
         CustomPropertyManager.PropertyTypeEncoder.encodeFieldType(String.class), "prop2", null);
     CustomPropertyDefinition prop3 = hrManager.getCustomPropertyManager().createDefinition(
         CustomPropertyManager.PropertyTypeEncoder.encodeFieldType(String.class), "prop3", null);
-    hrManager.add(new HumanResource("HR1", 1, hrManager));
-    hrManager.add(new HumanResource("HR2", 2, hrManager));
-    hrManager.add(new HumanResource("HR3", 3, hrManager));
+    hrManager.addHumanResource(new HumanResource("HR1", 1, hrManager));
+    hrManager.addHumanResource(new HumanResource("HR2", 2, hrManager));
+    hrManager.addHumanResource(new HumanResource("HR3", 3, hrManager));
     hrManager.getById(1).addCustomProperty(prop3, "1");
     hrManager.getById(2).addCustomProperty(prop2, "2");
     hrManager.getById(3).addCustomProperty(prop1, "3");
@@ -110,8 +110,8 @@ public class GPCsvExportTest extends TaskTestCase {
     Task task2 = createTask();
     Task task3 = createTask();
 
-    HumanResource alice = hrManager.create("Alice", 1);
-    HumanResource bob = hrManager.create("Bob", 2);
+    HumanResource alice = hrManager.createHumanResource("Alice", 1);
+    HumanResource bob = hrManager.createHumanResource("Bob", 2);
 
     task1.getAssignmentCollection().addAssignment(alice).setLoad(100f);
     task2.getAssignmentCollection().addAssignment(alice).setLoad(45.457f);
