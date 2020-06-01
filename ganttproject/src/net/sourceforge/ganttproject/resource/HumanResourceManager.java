@@ -207,7 +207,8 @@ public class HumanResourceManager {
   }
 
   private void fireResourceAdded(HumanResource resource) {
-    ResourceEvent e = new ResourceEvent(this, resource);
+    HumanResource[] resources = new HumanResource[] {resource};
+    ResourceEvent e = new ResourceEvent(this, resources );
     for (Iterator<ResourceView> i = myViews.iterator(); i.hasNext();) {
       ResourceView nextView = i.next();
       nextView.resourceAdded(e);
@@ -215,7 +216,8 @@ public class HumanResourceManager {
   }
 
   void fireResourceChanged(HumanResource resource) {
-    ResourceEvent e = new ResourceEvent(this, resource);
+    HumanResource[] resources = new HumanResource[] {resource};
+    ResourceEvent e = new ResourceEvent(this, resources);
     for (Iterator<ResourceView> i = myViews.iterator(); i.hasNext();) {
       ResourceView nextView = i.next();
       nextView.resourceChanged(e);
@@ -231,7 +233,8 @@ public class HumanResourceManager {
   }
 
   public void fireAssignmentsChanged(HumanResource resource) {
-    ResourceEvent e = new ResourceEvent(this, resource);
+    HumanResource[] resources = new HumanResource[] {resource};
+    ResourceEvent e = new ResourceEvent(this, resources);
     for (Iterator<ResourceView> i = myViews.iterator(); i.hasNext();) {
       ResourceView nextView = i.next();
       nextView.resourceAssignmentsChanged(e);

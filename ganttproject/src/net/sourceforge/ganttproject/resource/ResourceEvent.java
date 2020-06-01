@@ -13,13 +13,6 @@ public class ResourceEvent extends EventObject {
   /**
    * @param source
    */
-  public ResourceEvent(HumanResourceManager mgr, HumanResource resource) {
-    super(mgr);
-    myManager = mgr;
-    myResource = resource;
-    myResources = new HumanResource[] { myResource };
-  }
-
   public ResourceEvent(HumanResourceManager mgr, HumanResource[] resources) {
     super(mgr);
     myManager = mgr;
