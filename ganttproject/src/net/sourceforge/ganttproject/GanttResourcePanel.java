@@ -219,7 +219,7 @@ public class GanttResourcePanel extends TreeTableContainer<HumanResource, Resour
 
   @Override
   public void resourceAdded(ResourceEvent event) {
-    newHuman(event.getResource());
+    newHuman(event.getFirstResource());
   }
 
   @Override
@@ -230,8 +230,8 @@ public class GanttResourcePanel extends TreeTableContainer<HumanResource, Resour
 
   @Override
   public void resourceChanged(ResourceEvent e) {
-    getTreeModel().resourceChanged(e.getResource());
-    e.getResource().resetLoads();
+    getTreeModel().resourceChanged(e.getFirstResource());
+    e.getFirstResource().resetLoads();
     repaint();
   }
 

@@ -17,15 +17,15 @@ public class ResourceEvent extends EventObject {
     super(mgr);
     myManager = mgr;
     myResources = resources;
-    myResource = resources.length > 0 ? resources[0] : null;
+    myFirstResource = resources.length > 0 ? resources[0] : null;
   }
 
   public HumanResourceManager getManager() {
     return myManager;
   }
 
-  public HumanResource getResource() {
-    return myResource;
+  public HumanResource getFirstResource() {
+    return myFirstResource;
   }
 
   public HumanResource[] getResources() {
@@ -36,6 +36,6 @@ public class ResourceEvent extends EventObject {
 
   private final HumanResourceManager myManager;
 
-  private final HumanResource myResource;
+  private final HumanResource myFirstResource;
 
 }

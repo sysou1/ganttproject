@@ -22,7 +22,7 @@ public class TestResourceEvent extends TestCase {
 
         assertEquals(humanResourceManager, resourceEvent.getManager());
         assertEquals(resources, resourceEvent.getResources());
-        assertEquals(joe, resourceEvent.getResource());
+        assertEquals(joe, resourceEvent.getFirstResource());
 
     }
 
